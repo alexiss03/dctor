@@ -44,6 +44,33 @@ function getApiBaseUrl(): string {
 
 const apiBaseUrl = getApiBaseUrl();
 
+function buildErrorResponse(
+  statusCode: number,
+  name: string,
+  message: string
+): ErrorResponse {
+  return {
+    error: {
+      statusCode,
+      name,
+      message,
+    },
+  };
+}
+
+async function safeReadJson(response: Response): Promise<unknown> {
+  const payload = await response.text();
+  if (!payload) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(payload);
+  } catch {
+    return null;
+  }
+}
+
 export async function get<T>(
   url: string,
   searchParams?: Record<string, string> | URLSearchParams
@@ -54,28 +81,45 @@ export async function get<T>(
     ? `?${searchParamsObject.toString()}`
     : "";
 
-  const response = await fetchWithAuth(
-    `${apiBaseUrl}/${url}${searchParamsString}`,
-    {
-      method: "GET",
-      cache: "no-store",
+  try {
+    const response = await fetchWithAuth(
+      `${apiBaseUrl}/${url}${searchParamsString}`,
+      {
+        method: "GET",
+        cache: "no-store",
+      }
+    );
+
+    const responseData = (await safeReadJson(response)) as
+      | { error?: { name?: string; message?: string } }
+      | T
+      | null;
+
+    if (!response.ok) {
+      return buildErrorResponse(
+        response.status,
+        responseData &&
+          typeof responseData === "object" &&
+          "error" in responseData
+          ? responseData.error?.name ?? "UnknownError"
+          : "UnknownError",
+        responseData &&
+          typeof responseData === "object" &&
+          "error" in responseData
+          ? responseData.error?.message ?? "An unknown error has occurred."
+          : "An unknown error has occurred."
+      );
     }
-  );
 
-  const responseData = await response.json();
+    return { data: (responseData ?? ({} as T)) as T };
+  } catch (error) {
+    const message =
+      error instanceof Error
+        ? error.message
+        : "Unable to reach backend service.";
 
-  if (!response.ok) {
-    return {
-      error: {
-        statusCode: response.status,
-        name: responseData?.error?.name ?? "UnknownError",
-        message:
-          responseData?.error?.message ?? "An unknown error has occurred.",
-      },
-    };
+    return buildErrorResponse(503, "BackendUnavailable", message);
   }
-
-  return { data: responseData as T };
 }
 
 async function update<T>(
@@ -87,30 +131,47 @@ async function update<T>(
 ): Promise<SuccessfulResponse<T> | ErrorResponse> {
   const requestFn = auth ? fetchWithAuth : fetch;
 
-  const response = await requestFn(`${apiBaseUrl}/${url}`, {
-    method,
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json",
-      ...headers,
-    },
-    cache: "no-store",
-  });
-
-  const responseData = await response.json();
-
-  if (!response.ok) {
-    return {
-      error: {
-        statusCode: response.status,
-        name: responseData?.error?.name ?? "UnknownError",
-        message:
-          responseData?.error?.message ?? "An unknown error has occurred.",
+  try {
+    const response = await requestFn(`${apiBaseUrl}/${url}`, {
+      method,
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        ...headers,
       },
-    };
-  }
+      cache: "no-store",
+    });
 
-  return { data: responseData as T };
+    const responseData = (await safeReadJson(response)) as
+      | { error?: { name?: string; message?: string } }
+      | T
+      | null;
+
+    if (!response.ok) {
+      return buildErrorResponse(
+        response.status,
+        responseData &&
+          typeof responseData === "object" &&
+          "error" in responseData
+          ? responseData.error?.name ?? "UnknownError"
+          : "UnknownError",
+        responseData &&
+          typeof responseData === "object" &&
+          "error" in responseData
+          ? responseData.error?.message ?? "An unknown error has occurred."
+          : "An unknown error has occurred."
+      );
+    }
+
+    return { data: (responseData ?? ({} as T)) as T };
+  } catch (error) {
+    const message =
+      error instanceof Error
+        ? error.message
+        : "Unable to reach backend service.";
+
+    return buildErrorResponse(503, "BackendUnavailable", message);
+  }
 }
 
 export async function post<T>(
