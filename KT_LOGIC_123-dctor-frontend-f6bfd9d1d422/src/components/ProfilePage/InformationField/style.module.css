@@ -1,0 +1,38 @@
+.wrapper {
+    display: flex;
+    margin-bottom: 2em;
+}
+
+.wrapper:last-child {
+    margin-bottom: 0;
+}
+
+.icon-container {
+    color: #4551FD;
+    font-size: 2em;
+    margin-right: 0.25em;
+    width: 30px;
+    flex-shrink: 0;
+}
+
+.label-content-container {
+    width: 100%;
+}
+
+.label {
+    margin-top: 0.15em;
+    margin-bottom: 0.5em;
+    font-size: 1.3em;
+}
+
+.content {
+    font-size: 0.9em;
+}
+
+.content p {
+    margin-bottom: 0.5em;
+}
+
+.content p:last-child {
+    margin-bottom: 0;
+}

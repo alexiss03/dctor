@@ -1,0 +1,56 @@
+.container {
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.container:last-child {
+    margin-bottom: 0;
+}
+
+.user-info-container {
+    display: flex;
+    margin-bottom: 0.5rem;
+}
+
+.avatar-container {
+    margin-right: 1rem;
+}
+
+.name {
+    font-weight: bold;
+    font-size: 0.875rem;
+    margin-bottom: 0.3rem;
+}
+
+.name-date-container {
+    margin-top: 5px
+}
+
+.date-doctor-container {
+    display: flex;
+    font-size: 0.75rem;
+}
+
+.date {
+    margin-right: 2rem;
+    min-width: 110px;
+    color: #AEAEAE;
+}
+
+.rating-score-container {
+    margin-bottom: 0.5rem;
+}
+
+.rating-score-container > * {
+    margin-right: 0.4rem;
+}
+
+.rating-score-container > *:last-child {
+    margin-right: 0;
+}
+
+.review-text {
+    color: #787878;
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+}

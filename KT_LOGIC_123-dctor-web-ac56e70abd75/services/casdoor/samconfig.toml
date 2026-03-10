@@ -1,0 +1,9 @@
+version = 0.1
+[default.deploy.parameters]
+stack_name = "dctor-dev-iam-service"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1ky1s09siikqy"
+s3_prefix = "dctor-dev-iam-service"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = ["CasdoorWebAPIFn=726677866191.dkr.ecr.us-east-1.amazonaws.com/dctordeviamservicef6e80d73/casdoorwebapifnb20228acrepo"]

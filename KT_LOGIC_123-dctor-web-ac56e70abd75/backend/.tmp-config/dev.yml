@@ -1,0 +1,24 @@
+datasources:
+  dctordb:
+    name: DctorDb
+    connector: memory
+  iam:
+    name: IAM
+    connector: rest
+    baseURL: http://127.0.0.1:59000/api/
+    crud: false
+    operations: []
+  caldav:
+    name: CalDAV
+    connector: rest
+    baseURL: http://127.0.0.1:50080/davical/
+    crud: false
+    operations: []
+openApiSpec:
+  servers:
+    - url: http://127.0.0.1:3000/
+supportEmail: 'admin@grommettechnologies.com'
+verificationCodeTimeout: 10
+uuid_namespace:
+  default: c01e2340-c5d5-2abf-2d48-472eee9484da
+  insurance: 2df79ba8-5690-11ea-b0e4-d76f3e261f30

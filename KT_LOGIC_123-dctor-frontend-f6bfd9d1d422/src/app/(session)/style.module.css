@@ -1,0 +1,93 @@
+.wrapper {
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.content {
+    margin: auto;
+    width: 500px;
+    z-index: 1;
+}
+
+.small-text {
+    font-size: 0.875rem;
+    color: #808080;
+    line-height: 1.5rem;
+}
+
+.container {
+    padding: 4rem;
+    text-align: center;
+    min-height: 750px;
+    display: flex;
+    flex-direction: column;
+}
+
+.container > * {
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+.container > *:last-child {
+    margin-bottom: 0;
+}
+
+.input-container {
+    flex-grow: 1;
+}
+
+.cta-container {
+    max-width: 275px;
+    margin: auto;
+    margin-bottom: 2rem;
+}
+
+.background-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #f5f6ff;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.background-doctor {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.background-stethoscope {
+    position: absolute;
+    right: 3rem;
+    top: 3rem;
+}
+
+.title-container {
+    margin-top: -2rem;
+    margin-left: -2rem;
+    display: flex;
+    align-items: center;
+}
+
+.title-container button {
+    margin-right: 0.5rem;
+}
+
+.title-container h1 {
+    font-size: 1.5rem;
+    color: #4551FD;
+}
+
+.description {
+    text-align: left;
+    font-weight: 350;
+    color: black;
+    margin-bottom: 3rem;
+}

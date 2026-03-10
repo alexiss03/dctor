@@ -1,0 +1,70 @@
+.button {
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.button[disabled] {
+    cursor: default;
+}
+
+.primary {
+    background: #4551FD;
+    color: white;
+}
+
+.primary[disabled] {
+    background:#9fa6ff;
+}
+
+.secondary {
+    background: #dadcff;
+    color: #4551FD;
+}
+
+.secondary[disabled] {
+    background: #f5f6ff;
+    color: #979eff;
+}
+
+.danger {
+    background: #ef4545;
+    color: white;
+}
+
+.danger[disabled] {
+    background: #f7aaaa;
+    color: white;
+}
+
+.clear {
+    background-color: transparent;
+    color: #4551FD;
+}
+
+.clear[disabled] {
+    color: #979eff;
+}
+
+.default {
+    padding: 0.6em 1em;
+    font-size: 0.75em;
+}
+
+.medium {
+    padding: 0.6em 2em;
+    min-width: 100px;
+    font-size: 0.75em;
+}
+
+.large {
+    padding: 0.8em 2em;
+    min-width: 100px;
+    font-size: 1em;
+}
+
+.full {
+    width: 100%;
+}

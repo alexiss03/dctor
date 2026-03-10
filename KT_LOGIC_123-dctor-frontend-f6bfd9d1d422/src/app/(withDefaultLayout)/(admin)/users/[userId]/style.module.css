@@ -1,0 +1,15 @@
+.container {
+    padding: 2rem;
+}
+
+.top-fields-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.fields-container > * {
+    margin-bottom: 2rem;
+}

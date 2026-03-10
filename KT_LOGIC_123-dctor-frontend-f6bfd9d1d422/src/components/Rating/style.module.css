@@ -1,0 +1,27 @@
+.wrapper {
+    display: flex;;
+    align-items: center;;
+}
+
+.wrapper > * {
+    margin-right: 1rem;
+}
+
+.wrapper > *:last-child {
+    margin-right: 0;
+}
+
+.rating-wrapper {
+    color: #EFB33E;
+    display: flex;
+    align-items: center;
+}
+
+.rating-wrapper > svg {
+    margin-right: 0.25em;
+}
+
+.rating-wrapper > p {
+    font-size: 0.875em;
+    font-weight: bold;
+}

@@ -1,0 +1,9 @@
+version = 0.1
+[default.deploy.parameters]
+stack_name = "dctor-dev-backend-service"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1ky1s09siikqy"
+s3_prefix = "dctor-dev-backend-service"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = ["LFnBackendFn=726677866191.dkr.ecr.us-east-1.amazonaws.com/dctordevbackendservice451dae1c/lfnbackendfna185ad65repo"]

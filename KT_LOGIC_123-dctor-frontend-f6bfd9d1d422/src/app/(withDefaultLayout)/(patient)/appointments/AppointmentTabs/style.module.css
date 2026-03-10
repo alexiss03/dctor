@@ -1,0 +1,28 @@
+
+.tabs-container {
+    margin-top: 1rem;
+    margin-bottom: -1rem;
+}
+
+.tab-link {
+    background: none;
+    color: #787878;
+    font-size: 1.25rem;
+    border-radius: 0;
+    padding: 0.5rem 1rem;
+    display: inline-block;
+    margin: 0 1rem;
+}
+
+.tab-link:first-child {
+    margin-left: 0;
+}
+
+.tab-link:last-child {
+    margin-right: 0;
+}
+
+.tab-link.active {
+    color: #4551FD;
+    border-bottom: 2px solid #4551FD;
+}

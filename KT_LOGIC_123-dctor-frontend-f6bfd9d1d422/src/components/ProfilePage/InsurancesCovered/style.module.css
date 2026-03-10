@@ -1,0 +1,30 @@
+.insurance-item-container > * {
+    max-width: 500px;
+    margin: auto;
+}
+
+.insurance-item {
+    font-size: 1.1em;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.insurance-item:last-child {
+    margin-bottom: 0;
+}
+
+.insurance-item.covered {
+    color: #4551FD;
+}
+
+.covered-text.covered {
+    color: #189EFF;
+}
+
+.clinic-name {
+    margin-bottom: 1rem;
+    font-weight: 500;
+    font-size: 1.5em;
+}

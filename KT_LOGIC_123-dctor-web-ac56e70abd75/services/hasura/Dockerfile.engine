@@ -1,0 +1,9 @@
+FROM hasura/graphql-engine:v2.35.1 AS STANDARD
+
+# FROM public.ecr.aws/lambda/java:17 AS SERVERLESS
+# FROM public.ecr.aws/lambda/go:latest AS SERVERLESS
+# FROM public.ecr.aws/lambda/provided:latest AS SERVERLESS
+
+
+COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.7.0 /lambda-adapter /opt/extensions/lambda-adapter
+ENV PORT=7000

@@ -1,0 +1,20 @@
+.link {
+    color: #787878;
+    display: flex;
+    align-items: center;
+    padding: 0.6rem 0.5rem;
+    font-weight: normal;
+}
+
+.icon-container {
+    margin-right: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    width: 38px;
+}
+
+.active {
+    color: #4551FD;
+}

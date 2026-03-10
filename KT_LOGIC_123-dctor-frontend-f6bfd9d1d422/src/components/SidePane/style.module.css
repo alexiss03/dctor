@@ -1,0 +1,45 @@
+.sidepane-container {
+    position: absolute;
+    width: 500px;
+    height: 100%;
+    top: 0;
+    right: 0;
+    padding: 3rem 2rem;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.top-bar {
+    background: #F2F4FF;
+    margin: 0 -2rem;
+    margin-bottom: 2rem;
+    padding: 1rem 2rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.top-bar h2 {
+    margin-bottom: 0;
+    text-align: center;
+    flex: 1;
+}
+
+.back-button-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 2rem;
+}
+
+.content-container {
+    flex-grow: 1;
+}
+

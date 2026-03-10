@@ -1,0 +1,22 @@
+.container {
+    padding: 2rem;
+    color: #787878;
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+}
+
+.container:last-child {
+    margin-bottom: 0;
+}
+
+.label {
+    color: #33343B;
+    font-size: 1.75rem;
+}
+
+.label-actions-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}

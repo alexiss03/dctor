@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+}
+
+.container.with-padding {
+    padding-top: 4rem;
+}
+
+.text {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: rgba(0,0,0,0.5);
+}

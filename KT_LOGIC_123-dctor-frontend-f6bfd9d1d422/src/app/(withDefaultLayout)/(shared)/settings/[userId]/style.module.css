@@ -1,0 +1,15 @@
+.top-fields-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 4rem;
+    grid-row-gap: 0px;
+}
+
+.fields-container > * {
+    margin-bottom: 2rem;
+}
+
+.action-row {
+    margin-top: 2rem;
+}

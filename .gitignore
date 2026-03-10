@@ -1,0 +1,13 @@
+.DS_Store
+*.log
+*.pid
+
+**/node_modules/
+**/.next/
+**/dist/
+**/coverage/
+**/*.tsbuildinfo
+
+# Local secrets/certs
+KT_LOGIC_123-dctor-web-ac56e70abd75/conf/davical/.pgpass
+KT_LOGIC_123-dctor-web-ac56e70abd75/conf/kong/ssl/**

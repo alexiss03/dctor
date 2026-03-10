@@ -1,0 +1,54 @@
+.wrapper {
+    display: flex;
+    margin-bottom: 0.75rem;
+}
+
+.wrapper:last-child{ 
+    margin-bottom: 0;
+}
+
+.icon-container {
+    margin-right: 1rem;
+    font-size: 1.75em;
+    color: #4551FD;
+}
+
+.small-icon.small-icon {
+    font-size: 1rem;
+    margin-right: 0.5rem;
+
+}
+
+.label {
+    margin-bottom: 0.25rem;
+}
+
+.value {
+    font-size: 0.875em;
+    color: #33343B;
+    font-weight: 500;
+    margin-top: 1px;
+    width: 100%;
+}
+
+.small-text.small-text {
+    font-size: 0.75em;
+    color: #787878;
+}
+
+.large-text.large-text {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.label-value-container {
+    width: 100%;
+}
+
+.user-avatar-container {
+    margin-right: 2rem;
+}
+
+.user-avatar-container.with-top-margin {
+    margin-top: 1rem;
+}

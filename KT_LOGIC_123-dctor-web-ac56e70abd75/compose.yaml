@@ -1,0 +1,358 @@
+# mysql:8.0.32-oracle
+
+version: '3.9'
+services:
+  rdb:
+    build:
+      context: .
+      dockerfile: services/postgresql/Dockerfile
+    environment:
+      LANGUAGE: en_US.UTF-base8
+      LANG: en_US.UTF-8
+      LC_ALL: en_US.UTF-8
+      POSTGRES_USER: "${PGSQL_USER}"
+      POSTGRES_PASSWORD: "${PGSQL_PASSWORD}"
+      POSTGRES_DB: "${PGSQL_DB}"
+      PGDATA: /data/pgdata
+    networks:
+      - doctrnet
+    volumes:
+      - doctrdb:/data/pgdata/
+      - ./services/postgresql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d/
+    ports:
+      - '55432:5432'
+  rdb-proxy:
+    image: bitnami/pgbouncer:latest
+    environment:
+      POSTGRESQL_USERNAME: "${PGSQL_USER}"
+      POSTGRESQL_PASSWORD: "${PGSQL_PASSWORD}"
+      POSTGRESQL_DATABASE: "${PGSQL_DB}"
+      POSTGRESQL_HOST: "dctor.postgres.database.azure.com"
+      POSTGRESQL_PORT: "5432"
+      PGBOUNCER_DATABASE: "${PGSQL_DB}"
+      PGBOUNCER_SERVER_TLS_SSLMODE: require
+      PGBOUNCER_PORT: 6432
+    networks:
+      - doctrnet
+    ports:
+      - '55433:6432'
+  file-storage:
+    image: minio/minio:RELEASE.2023-03-09T23-16-13Z
+    command: server --console-address ":9090" /data
+    environment:
+      MINIO_ACCESS_KEY: "${STORAGE_ACCESS_KEY}"
+      MINIO_SECRET_KEY: "${STORAGE_SECRET_KEY}"
+      MINIO_ROOT_USER: "${STORAGE_ROOT_USER}"
+      MINIO_ROOT_PASSWORD: "${STORAGE_ROOT_PASSWORD}"
+    networks:
+      - doctrnet
+    volumes:
+      - file-storage:/data/
+    ports:
+      - '9000'
+      - '9090'
+  caldav:
+    build:
+      context: services/davical
+      dockerfile: Dockerfile
+    environment:
+      PGSQL_USER: "${PGSQL_USER}"
+      PGSQL_PASSWORD: "${PGSQL_PASSWORD}"
+      PGSQL_DB: "${PGSQL_DB}"
+      CALDAV_ADMIN_PASSWORD: "${CALDAV_ADMIN_PASSWORD}"
+    networks:
+      - doctrnet
+    volumes:
+      - ./services/davical/bin:/appl/bin/
+      - ./services/davical/src-awl:/usr/share/awl/
+      - ./services/davical/src-oauth2:/usr/share/oauth2/
+      - ./services/davical/src:/usr/share/davical/
+      - ./services/davical/src-api/htdocs/api/sync-ldap.php:/usr/share/davical/htdocs/sync-ldap.php
+      - ./services/davical/src-api/htdocs/api/sync-principal.php:/usr/share/davical/htdocs/sync-principal.php
+      - ./services/davical/src-api/htdocs/api/add-collection.php:/usr/share/davical/htdocs/add-collection.php
+      - ./conf/davical/001-davical.conf:/etc/apache2/sites-enabled/001-davical.conf
+      - ./conf/davical/config.php:/etc/davical/config.php
+      - ./build/conf/davical/administration.yml:/etc/davical/administration.yml
+      - ./build/conf/davical/.pgpass:/root/.pgpass
+    ports:
+      - '50080:80'
+  iam-serverless:
+    build:
+      context: .
+      dockerfile: services/casdoor/Dockerfile
+      target: SERVERLESS
+    environment:
+      PGSQL_USER: "${PGSQL_USER}"
+      PGSQL_PASSWORD: "${PGSQL_PASSWORD}"
+      PGSQL_DB: "${PGSQL_DB}"
+      dataSourceName: "sslmode=disable user=${PGSQL_USER} password=${PGSQL_PASSWORD} host=rdb port=5432 dbname=${PGSQL_DB} search_path=iam,public"
+      PORT: '8000'
+      READINESS_CHECK_PATH: '/.well-known/openid-configuration'
+    networks:
+      - doctrnet
+    volumes:
+      - ./conf/casdoor:/conf/
+      - ./data/casdoor/init_data.json:/init_data.json
+    ports:
+      - 389
+      - '59000:8000'
+  iam:
+    build:
+      context: services/casdoor
+      dockerfile: Dockerfile
+      target: STANDARD
+    environment:
+      PGSQL_USER: "${PGSQL_USER}"
+      PGSQL_PASSWORD: "${PGSQL_PASSWORD}"
+      PGSQL_DB: "${PGSQL_DB}"
+      dataSourceName: "sslmode=disable user=${PGSQL_USER} password=${PGSQL_PASSWORD} host=rdb port=5432 dbname=${PGSQL_DB}"
+    networks:
+      - doctrnet
+    volumes:
+      - ./conf/casdoor:/conf/
+      - ./data/casdoor/init_data.json:/init_data.json
+    ports:
+      - 389
+      - '58000:8000'
+  iam-dev:
+    build:
+      context: services/casdoor
+      dockerfile: Dockerfile
+      target: STANDARD
+    environment:
+      PGSQL_USER: "${PGSQL_USER}"
+      PGSQL_PASSWORD: "${PGSQL_PASSWORD}"
+      PGSQL_DB: "${PGSQL_DB}"
+      dataSourceName: "sslmode=disable user=${PGSQL_USER} password=${PGSQL_PASSWORD} host=dctor-54-84-127-252.sslip.io port=55433 dbname=${PGSQL_DB}"
+    networks:
+      - doctrnet
+    volumes:
+      - ./conf/casdoor:/conf/
+      - ./data/casdoor/init_data.json:/init_data.json
+    ports:
+      - 389
+      - '58000:8000'
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      NODE_CONFIG_DIR: ./conf/
+      NODE_ENV: dev
+    networks:
+      - doctrnet
+    volumes:
+      - ./backend:/home/node/app/
+    ports:
+      - '3000'
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    networks:
+      - doctrnet
+    volumes:
+      - ./frontend:/app/
+    ports:
+      - '3000'
+  apigw-js-pluginserver:
+    build:
+      context: services/kong
+      dockerfile: JS-Plugin-Server.Dockerfile
+    networks:
+      - doctrnet
+    volumes:
+      - ./services/kong/bin:/appl/bin/
+      - ./services/kong/js-plugins:/appl/pluginserver/js-plugins/
+      - socks:/appl/pluginserver/socks/
+  api-gateway:
+    # image: "kong/kong-gateway:${KONG_VERSION}"
+    build:
+      context: services/kong
+      dockerfile: Gateway.Dockerfile
+    environment:
+      KONG_PG_USER: "${PGSQL_USER}"
+      KONG_PG_PASSWORD: "${PGSQL_PASSWORD}"
+      KONG_PG_DATABASE: "${PGSQL_DB}"
+      KONG_LOG_LEVEL: debug
+    networks:
+      doctrnet:
+        aliases:
+          -  api-local.dctor.com
+    volumes:
+      - ./conf/kong/kong.conf:/etc/kong/kong.conf
+      - ./conf/kong/ssl/api-local.dctor.com/fullchain.pem:/etc/ssl/certs/api-local.dctor.com.crt
+      - ./conf/kong/ssl/api-local.dctor.com/privkey.pem:/etc/ssl/certs/api-local.dctor.com.pem
+      - socks:/appl/pluginserver/socks/
+      - ./services/kong/lua-libs:/appl/lua-libs/
+      - ./services/kong/lua-plugins:/appl/lua-plugins/
+    ports:
+      - '8000'
+      - '58001-58002:58001-58002'
+      - '443:443'
+
+  graphql-engine:
+    image: hasura/graphql-engine:v2.35.1
+    ports:
+      - "58080:8080"
+    environment:
+      ## postgres database to store Hasura metadata
+      # HASURA_GRAPHQL_METADATA_DATABASE_URL: "postgres://${PGSQL_USER}:${PGSQL_PASSWORD}@rdb:5432/${PGSQL_DB}"
+      HASURA_GRAPHQL_METADATA_DATABASE_URL: "postgres://${PGSQL_USER}:${PGSQL_PASSWORD}@rdb:5432/${PGSQL_DB}"
+      ## this env var can be used to add the above postgres database to Hasura as a data source. this can be removed/updated based on your needs
+      # PG_DATABASE_URL: "postgres://${PGSQL_USER}:${PGSQL_PASSWORD}@rdb:5432/${PGSQL_DB}?search_path=graphql"
+      PG_DATABASE_URL: "postgres://${PGSQL_USER}:${PGSQL_PASSWORD}@rdb:5432/${PGSQL_DB}"
+      ## enable the console served by server
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
+      ## enable debugging mode. It is recommended to disable this in production
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      ## uncomment next line to run console offline (i.e load console assets from server instead of CDN)
+      # HASURA_GRAPHQL_CONSOLE_ASSETS_DIR: /srv/console-assets
+      ## uncomment next line to set an admin secret
+      # HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
+      HASURA_GRAPHQL_METADATA_DEFAULTS: |
+        {
+          "backend_configs":{
+            "dataconnector":{
+              "athena":{
+                "uri":"https://qgep6ilkokpghmers3a54fjuku0rumke.lambda-url.us-east-1.on.aws/api/v1/athena"
+              },
+              "mariadb":{
+                "uri":"https://qgep6ilkokpghmers3a54fjuku0rumke.lambda-url.us-east-1.on.aws/api/v1/mariadb"
+              },
+              "mysql8":{
+                "uri":"https://qgep6ilkokpghmers3a54fjuku0rumke.lambda-url.us-east-1.on.aws/api/v1/mysql"
+              },
+              "oracle":{
+                "uri":"https://qgep6ilkokpghmers3a54fjuku0rumke.lambda-url.us-east-1.on.aws/api/v1/oracle"
+              },
+              "snowflake":{
+                "uri":"https://qgep6ilkokpghmers3a54fjuku0rumke.lambda-url.us-east-1.on.aws/api/v1/snowflake"
+              }
+            }
+          }
+        }
+      NODE_TLS_REJECT_UNAUTHORIZED: 0
+      DCTOR_API_BE_SCHEME: "${DCTOR_API_BE_SCHEME}"
+      DCTOR_API_BE_HOST: "${DCTOR_API_BE_HOST}"
+      DCTOR_API_BE_PORT: "${DCTOR_API_BE_PORT}"
+      DCTOR_API_IAM_SCHEME: "${DCTOR_API_IAM_SCHEME}"
+      DCTOR_API_IAM_HOST: "${DCTOR_API_IAM_HOST}"
+      DCTOR_API_IAM_PORT: "${DCTOR_API_IAM_PORT}"
+    networks:
+      - doctrnet
+    # depends_on:
+    #   graphql-dc-agent:
+    #     condition: service_healthy
+
+  graphql-engine-2:
+    image: directus/directus:10.0.0
+    environment:
+      KEY: '255d861b-5ea1-5996-9aa3-922530ec40b1'
+      SECRET: '6116487b-cda1-52c2-b5b5-c8022c45e263'
+
+      DB_CLIENT: 'pg'
+      DB_HOST: 'rdb'
+      DB_PORT: '5432'
+      DB_DATABASE: "${PGSQL_DB}"
+      DB_USER: "${PGSQL_USER}"
+      DB_PASSWORD: "${PGSQL_PASSWORD}"
+
+      ADMIN_EMAIL: lbhonrade.6+dctoradmin@gmail.com
+      ADMIN_PASSWORD: 123456
+    networks:
+      - doctrnet
+
+  graphql-engine-serverless:
+    build:
+      context: .
+      dockerfile: services/hasura/Dockerfile.engine
+      target: STANDARD
+    ports:
+      - "58080:8080"
+    environment:
+      ## postgres database to store Hasura metadata
+      HASURA_GRAPHQL_METADATA_DATABASE_URL: "postgres://${PGSQL_USER}:${PGSQL_PASSWORD}@rdb:5432/${PGSQL_DB}"
+      ## this env var can be used to add the above postgres database to Hasura as a data source. this can be removed/updated based on your needs
+      PG_DATABASE_URL: "postgres://${PGSQL_USER}:${PGSQL_PASSWORD}@rdb:5432/${PGSQL_DB}?search_path=graphql"
+      ## enable the console served by server
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
+      ## enable debugging mode. It is recommended to disable this in production
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      ## uncomment next line to run console offline (i.e load console assets from server instead of CDN)
+      # HASURA_GRAPHQL_CONSOLE_ASSETS_DIR: /srv/console-assets
+      ## uncomment next line to set an admin secret
+      # HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
+      HASURA_GRAPHQL_METADATA_DEFAULTS: |
+        {
+          "backend_configs":{
+            "dataconnector":{
+              "athena":{
+                "uri":"https://kmhygxr63sky5afrg2dclbweiu0qfrdw.lambda-url.us-east-1.on.aws/api/v1/athena"
+              },
+              "mariadb":{
+                "uri":"https://kmhygxr63sky5afrg2dclbweiu0qfrdw.lambda-url.us-east-1.on.aws/api/v1/mariadb"
+              },
+              "mysql8":{
+                "uri":"https://kmhygxr63sky5afrg2dclbweiu0qfrdw.lambda-url.us-east-1.on.aws/api/v1/mysql"
+              },
+              "oracle":{
+                "uri":"https://kmhygxr63sky5afrg2dclbweiu0qfrdw.lambda-url.us-east-1.on.aws/api/v1/oracle"
+              },
+              "snowflake":{
+                "uri":"https://kmhygxr63sky5afrg2dclbweiu0qfrdw.lambda-url.us-east-1.on.aws/api/v1/snowflake"
+              }
+            }
+          }
+        }
+    networks:
+      - doctrnet
+
+  graphql-dc-agent:
+    image: hasura/graphql-data-connector:v2.29.0
+    ports:
+      - 58081:8081
+    environment:
+      QUARKUS_LOG_LEVEL: ERROR # FATAL, ERROR, WARN, INFO, DEBUG, TRACE
+      ## https://quarkus.io/guides/opentelemetry#configuration-reference
+      QUARKUS_OPENTELEMETRY_ENABLED: "false"
+      ## QUARKUS_OPENTELEMETRY_TRACER_EXPORTER_OTLP_ENDPOINT: http://jaeger:4317
+    networks:
+      - doctrnet
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/api/v1/athena/health"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
+  graphql-dc-agent-serverless:
+    build:
+      context: .
+      dockerfile: services/hasura/Dockerfile.dc-agent
+      target: SERVERLESS
+    ports:
+      - 58081:8081
+    environment:
+      QUARKUS_LOG_LEVEL: ERROR # FATAL, ERROR, WARN, INFO, DEBUG, TRACE
+      ## https://quarkus.io/guides/opentelemetry#configuration-reference
+      QUARKUS_OPENTELEMETRY_ENABLED: "false"
+      ## QUARKUS_OPENTELEMETRY_TRACER_EXPORTER_OTLP_ENDPOINT: http://jaeger:4317
+    networks:
+      - doctrnet
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/api/v1/athena/health"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
+
+networks:
+  doctrnet:
+    driver: bridge
+
+volumes:
+  doctrdb:
+  file-storage:
+  socks:

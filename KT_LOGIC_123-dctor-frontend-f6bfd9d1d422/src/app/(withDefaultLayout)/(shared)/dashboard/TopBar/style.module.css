@@ -1,0 +1,39 @@
+.container {
+    background: white;
+    border-radius: 4px;
+    display: flex;
+    padding: 1rem 2rem;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.searchbar-container {
+    flex-grow: 1;
+    padding-right: 2rem;
+    display: flex;
+    align-items: center;
+    min-width: 400px;
+    max-width: 950px;
+}
+
+
+.user-container {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+}
+
+.user-name {
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.user-info-container {
+    text-align: right;
+    margin-right: 1rem;
+}
+
+.doctor {
+    color: #4551FD;
+    font-weight: bold;
+}

@@ -1,0 +1,27 @@
+.input-container {
+    margin-bottom: 4rem;
+    margin-top: 1rem;
+}
+
+.value {
+    font-size: 1em;
+    color: #787878;
+    font-weight: 500;
+    padding: 10px;
+    text-align: left;
+}
+
+.otp-input-wrapper {
+    margin-bottom: 0 !important;
+}
+
+.otp-input-wrapper input {
+    width: 45px !important;
+    height: 60px;
+    padding: 0;
+}
+
+.resend-otp-text {
+    color: #808080;
+    margin-bottom: 3rem;
+}

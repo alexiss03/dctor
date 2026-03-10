@@ -1,0 +1,9 @@
+.wrapper {
+    min-height: 100vh;
+    height: 100%;
+    position: relative;
+}
+
+.background-wrapper {
+    margin-left: 300px;
+}

@@ -1,0 +1,41 @@
+.schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 0.3fr repeat(7, 1fr);
+    grid-column-gap: 24px;
+    grid-row-gap: 8px;
+    margin-bottom: 2rem;
+}
+
+.schedule-grid:last-child {
+    margin-bottom: 0;
+}
+
+.schedule-row-grid {
+    align-self: center;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.weekday-container {
+    border-bottom: 1px solid #E6EAEE;
+    padding: 1rem;
+    justify-content: space-between;
+    width: 300px;
+}
+
+.next-button-container {
+    margin-top: 2rem;
+    display: flex;   
+    justify-content: flex-end;
+}
+
+.time-range-container {
+    margin-bottom: 0;
+}
+
+.time-range-container > * {
+    flex: 1;
+    margin-bottom: 0 !important;
+}

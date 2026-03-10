@@ -1,0 +1,92 @@
+.container {
+    max-width: 1200px;
+    display: flex;
+    padding: 2rem;
+    margin-bottom: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.no-container {
+    margin-bottom: 1rem;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.container:last-child {
+    margin-bottom: 0;
+}
+
+.no-container:last-child {
+    margin-bottom: 0;
+}
+
+.avatar-container {
+    margin-right: 2rem;
+}
+
+.info-container {
+    display: grid;
+    width: 100%;
+}
+
+.info-container.row {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.info-container.column {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, auto);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.info-container > * {
+    margin-right: 2rem;
+    margin-bottom: 0.75rem;
+}
+
+.info-container > *:last-child {
+    margin-right: 0;
+    margin-bottom: 0;
+}
+
+.actions-container {
+    z-index: 1;
+    flex-grow: 1;
+    display: flex;
+}
+
+.actions-container.row {
+    align-items: center;
+}
+
+.actions-container.column {
+    align-items: flex-end;
+}
+
+.actions-container > * {
+    margin-right: 1rem;
+}
+
+.actions-container > *:last-child {
+    margin-right: 0;
+}
+
+.actions-container.row {
+    justify-content: flex-end;
+}
+
+.background-image {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    width: auto;
+    max-height: 80%;
+}

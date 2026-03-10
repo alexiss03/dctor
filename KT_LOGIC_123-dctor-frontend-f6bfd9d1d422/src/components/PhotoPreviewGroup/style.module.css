@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.photo-container {
+    width: 200px;
+    height: 200px;
+
+    margin-right: 1rem;
+}
+
+.photo-container:last-child {
+    margin-right: 0;
+}

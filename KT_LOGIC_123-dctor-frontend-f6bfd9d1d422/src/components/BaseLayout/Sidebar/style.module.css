@@ -1,0 +1,25 @@
+.container {
+    background: white;
+    width: 300px;
+    height: 100%;
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 1;
+    position: fixed;    
+    overflow-y: auto;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5rem;
+}
+
+.navlinks-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}

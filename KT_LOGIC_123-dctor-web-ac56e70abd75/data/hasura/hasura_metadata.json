@@ -1,0 +1,4264 @@
+{
+  "resource_version": 650,
+  "metadata": {
+    "version": 3,
+    "sources": [
+      {
+        "name": "dctordb",
+        "kind": "postgres",
+        "tables": [
+          {
+            "table": {
+              "name": "address",
+              "schema": "dctor"
+            },
+            "insert_permissions": [
+              {
+                "role": "dctor/role_clinic_admin",
+                "permission": {
+                  "check": {},
+                  "set": {
+                    "create_date": "x-hasura-Current-Timestamp",
+                    "created_by_id": "x-hasura-User-Id",
+                    "last_update_date": "x-hasura-Current-Timestamp",
+                    "last_updated_by_id": "x-hasura-User-Id"
+                  },
+                  "columns": [
+                    "address_line",
+                    "latitude",
+                    "longitude",
+                    "owner_id",
+                    "owner_type"
+                  ]
+                },
+                "comment": ""
+              },
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "check": {},
+                  "set": {
+                    "create_date": "x-hasura-Current-Timestamp",
+                    "created_by_id": "x-hasura-User-Id",
+                    "last_update_date": "x-hasura-Current-Timestamp",
+                    "last_updated_by_id": "x-hasura-User-Id"
+                  },
+                  "columns": [
+                    "address_line",
+                    "create_date",
+                    "created_by_id",
+                    "delete_date",
+                    "last_update_date",
+                    "last_updated_by_id",
+                    "latitude",
+                    "longitude",
+                    "owner_id",
+                    "owner_type",
+                    "sequence_id"
+                  ]
+                },
+                "comment": ""
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "dctor/role_admin",
+                "permission": {
+                  "columns": [
+                    "address_line",
+                    "owner_type",
+                    "sequence_id",
+                    "latitude",
+                    "longitude",
+                    "create_date",
+                    "delete_date",
+                    "last_update_date",
+                    "created_by_id",
+                    "last_updated_by_id",
+                    "owner_id",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_anonymous",
+                "permission": {
+                  "columns": [
+                    "address_line",
+                    "latitude",
+                    "longitude",
+                    "owner_id",
+                    "owner_type"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_clinic_admin",
+                "permission": {
+                  "columns": [
+                    "address_line",
+                    "latitude",
+                    "longitude",
+                    "owner_id",
+                    "owner_type",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_doctor",
+                "permission": {
+                  "columns": [
+                    "address_line",
+                    "latitude",
+                    "longitude",
+                    "owner_id",
+                    "owner_type",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "columns": [
+                    "address_line",
+                    "latitude",
+                    "longitude",
+                    "owner_id",
+                    "owner_type",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "columns": [
+                    "address_line",
+                    "owner_type",
+                    "sequence_id",
+                    "latitude",
+                    "longitude",
+                    "create_date",
+                    "delete_date",
+                    "last_update_date",
+                    "created_by_id",
+                    "last_updated_by_id",
+                    "owner_id",
+                    "uuid"
+                  ],
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ],
+            "update_permissions": [
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "columns": [
+                    "address_line",
+                    "create_date",
+                    "created_by_id",
+                    "delete_date",
+                    "last_update_date",
+                    "last_updated_by_id",
+                    "latitude",
+                    "longitude",
+                    "owner_id",
+                    "owner_type"
+                  ],
+                  "filter": {},
+                  "check": null,
+                  "set": {
+                    "last_update_date": "x-hasura-Current-Timestamp",
+                    "last_updated_by_id": "x-hasura-User-Id"
+                  }
+                },
+                "comment": ""
+              }
+            ],
+            "delete_permissions": [
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "availability",
+              "schema": "dctor"
+            },
+            "insert_permissions": [
+              {
+                "role": "dctor/role_clinic_admin",
+                "permission": {
+                  "check": {},
+                  "set": {
+                    "create_date": "x-hasura-Current-Timestamp",
+                    "created_by_id": "x-hasura-User-Id",
+                    "last_update_date": "x-hasura-Current-Timestamp",
+                    "last_updated_by_id": "x-hasura-User-Id"
+                  },
+                  "columns": [
+                    "owner_id",
+                    "owner_type",
+                    "rule",
+                    "time_end",
+                    "time_start",
+                    "weekday"
+                  ]
+                },
+                "comment": ""
+              },
+              {
+                "role": "dctor/role_doctor",
+                "permission": {
+                  "check": {},
+                  "set": {
+                    "create_date": "x-hasura-Current-Timestamp",
+                    "created_by_id": "x-hasura-User-Id",
+                    "last_update_date": "x-hasura-Current-Timestamp",
+                    "last_updated_by_id": "x-hasura-User-Id"
+                  },
+                  "columns": [
+                    "owner_id",
+                    "owner_type",
+                    "rule",
+                    "time_end",
+                    "time_start",
+                    "weekday"
+                  ]
+                },
+                "comment": ""
+              },
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "check": {},
+                  "set": {
+                    "create_date": "x-hasura-Current-Timestamp",
+                    "created_by_id": "x-hasura-User-Id",
+                    "last_update_date": "x-hasura-Current-Timestamp",
+                    "last_updated_by_id": "x-hasura-User-Id"
+                  },
+                  "columns": [
+                    "create_date",
+                    "created_by_id",
+                    "delete_date",
+                    "last_update_date",
+                    "last_updated_by_id",
+                    "owner_id",
+                    "owner_type",
+                    "rule",
+                    "sequence_id",
+                    "time_end",
+                    "time_start",
+                    "weekday"
+                  ]
+                },
+                "comment": ""
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "dctor/role_admin",
+                "permission": {
+                  "columns": [
+                    "owner_type",
+                    "rule",
+                    "sequence_id",
+                    "weekday",
+                    "create_date",
+                    "delete_date",
+                    "last_update_date",
+                    "time_end",
+                    "time_start",
+                    "created_by_id",
+                    "last_updated_by_id",
+                    "owner_id",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_anonymous",
+                "permission": {
+                  "columns": [
+                    "owner_id",
+                    "owner_type",
+                    "rule",
+                    "time_end",
+                    "time_start",
+                    "uuid",
+                    "weekday"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_clinic_admin",
+                "permission": {
+                  "columns": [
+                    "owner_id",
+                    "owner_type",
+                    "rule",
+                    "time_end",
+                    "time_start",
+                    "uuid",
+                    "weekday"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_doctor",
+                "permission": {
+                  "columns": [
+                    "owner_id",
+                    "owner_type",
+                    "rule",
+                    "time_end",
+                    "time_start",
+                    "uuid",
+                    "weekday"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "columns": [
+                    "owner_id",
+                    "owner_type",
+                    "rule",
+                    "time_end",
+                    "time_start",
+                    "uuid",
+                    "weekday"
+                  ],
+                  "filter": {}
+                }
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "event",
+              "schema": "dctor"
+            },
+            "configuration": {
+              "column_config": {},
+              "custom_column_names": {},
+              "custom_name": "event",
+              "custom_root_fields": {
+                "delete": "deleteEvent",
+                "delete_by_pk": "deleteEventById",
+                "insert": "createEvents",
+                "insert_one": "createEvent",
+                "select": "findEvents",
+                "select_by_pk": "findEventById",
+                "update": "updateEvent",
+                "update_by_pk": "updateEventById",
+                "update_many": "updateEvents"
+              }
+            },
+            "object_relationships": [
+              {
+                "name": "created_by",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "created_by_id": "id"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "iam_user",
+                      "schema": "public"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last_updated_by",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "last_updated_by_id": "id"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "iam_user",
+                      "schema": "public"
+                    }
+                  }
+                }
+              }
+            ],
+            "array_relationships": [
+              {
+                "name": "attendees",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "uuid": "event_id"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "event_attendee",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "referenced_reviews",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "uuid": "reference_id"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "review",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              }
+            ],
+            "insert_permissions": [
+              {
+                "role": "dctor/role_admin",
+                "permission": {
+                  "check": {},
+                  "columns": [
+                    "condition",
+                    "create_date",
+                    "created_by_id",
+                    "delete_date",
+                    "dtend",
+                    "dtstamp",
+                    "dtstart",
+                    "last_update_date",
+                    "last_updated_by_id",
+                    "notes",
+                    "sequence_id",
+                    "status"
+                  ]
+                }
+              },
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "check": {},
+                  "set": {
+                    "create_date": "x-hasura-Current-Timestamp",
+                    "created_by_id": "X-Hasura-User-Id",
+                    "last_update_date": "x-hasura-Current-Timestamp",
+                    "last_updated_by_id": "X-Hasura-User-Id",
+                    "status": "incoming"
+                  },
+                  "columns": [
+                    "clinic_id",
+                    "condition",
+                    "create_date",
+                    "dtend",
+                    "dtstamp",
+                    "dtstart",
+                    "last_update_date"
+                  ]
+                }
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "dctor/role_admin",
+                "permission": {
+                  "columns": [
+                    "clinic_id",
+                    "condition",
+                    "create_date",
+                    "created_by_id",
+                    "delete_date",
+                    "dtend",
+                    "dtstamp",
+                    "dtstart",
+                    "last_update_date",
+                    "last_updated_by_id",
+                    "notes",
+                    "sequence_id",
+                    "status",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_doctor",
+                "permission": {
+                  "columns": [
+                    "clinic_id",
+                    "condition",
+                    "create_date",
+                    "created_by_id",
+                    "delete_date",
+                    "dtend",
+                    "dtstamp",
+                    "dtstart",
+                    "last_update_date",
+                    "last_updated_by_id",
+                    "notes",
+                    "sequence_id",
+                    "status",
+                    "uuid"
+                  ],
+                  "filter": {
+                    "attendees": {
+                      "attendee": {
+                        "id": {
+                          "_eq": "X-Hasura-User-Id"
+                        }
+                      }
+                    }
+                  },
+                  "allow_aggregations": true
+                }
+              },
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "columns": [
+                    "clinic_id",
+                    "condition",
+                    "dtend",
+                    "dtstamp",
+                    "dtstart",
+                    "notes",
+                    "status",
+                    "uuid"
+                  ],
+                  "filter": {
+                    "created_by_id": {
+                      "_eq": "X-Hasura-User-Id"
+                    }
+                  },
+                  "allow_aggregations": true
+                }
+              }
+            ],
+            "update_permissions": [
+              {
+                "role": "dctor/role_admin",
+                "permission": {
+                  "columns": [
+                    "condition",
+                    "create_date",
+                    "created_by_id",
+                    "delete_date",
+                    "dtend",
+                    "dtstamp",
+                    "dtstart",
+                    "last_update_date",
+                    "last_updated_by_id",
+                    "notes",
+                    "sequence_id",
+                    "status"
+                  ],
+                  "filter": {},
+                  "check": {}
+                }
+              },
+              {
+                "role": "dctor/role_doctor",
+                "permission": {
+                  "columns": [
+                    "last_update_date",
+                    "last_updated_by_id",
+                    "notes",
+                    "status"
+                  ],
+                  "filter": {},
+                  "check": null
+                }
+              },
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "columns": [
+                    "clinic_id",
+                    "condition",
+                    "dtend",
+                    "dtstamp",
+                    "dtstart",
+                    "last_update_date",
+                    "last_updated_by_id",
+                    "notes",
+                    "status"
+                  ],
+                  "filter": {
+                    "status": {
+                      "_eq": "incoming"
+                    }
+                  },
+                  "check": null,
+                  "set": {
+                    "last_update_date": "x-hasura-Current-Timestamp",
+                    "last_updated_by_id": "x-hasura-User-Id"
+                  }
+                }
+              }
+            ],
+            "delete_permissions": [
+              {
+                "role": "dctor/role_admin",
+                "permission": {
+                  "filter": {}
+                }
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "event_attendee",
+              "schema": "dctor"
+            },
+            "object_relationships": [
+              {
+                "name": "attendee",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "attendee_id": "id"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "iam_user",
+                      "schema": "public"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "event",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "event_id": "uuid"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "event",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              }
+            ],
+            "insert_permissions": [
+              {
+                "role": "dctor/role_doctor",
+                "permission": {
+                  "check": {},
+                  "set": {
+                    "created_by_id": "x-hasura-User-Id",
+                    "last_updated_by_id": "x-hasura-User-Id"
+                  },
+                  "columns": [
+                    "attendee_id",
+                    "event_id",
+                    "status"
+                  ]
+                }
+              },
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "check": {},
+                  "set": {
+                    "create_date": "x-hasura-Current-Timestamp",
+                    "created_by_id": "x-hasura-User-Id",
+                    "last_update_date": "x-hasura-Current-Timestamp",
+                    "last_updated_by_id": "x-hasura-User-Id"
+                  },
+                  "columns": [
+                    "attendee_id",
+                    "event_id",
+                    "status"
+                  ]
+                }
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "dctor/role_admin",
+                "permission": {
+                  "columns": [
+                    "status",
+                    "sequence_id",
+                    "create_date",
+                    "delete_date",
+                    "last_update_date",
+                    "attendee_id",
+                    "created_by_id",
+                    "event_id",
+                    "last_updated_by_id",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_doctor",
+                "permission": {
+                  "columns": [
+                    "attendee_id",
+                    "event_id",
+                    "status",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "columns": [
+                    "attendee_id",
+                    "event_id",
+                    "status",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              }
+            ],
+            "update_permissions": [
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "columns": [
+                    "status"
+                  ],
+                  "filter": {},
+                  "check": null
+                }
+              }
+            ],
+            "event_triggers": [
+              {
+                "name": "on_insert_event_attendee",
+                "definition": {
+                  "enable_manual": false,
+                  "insert": {
+                    "columns": "*"
+                  }
+                },
+                "retry_conf": {
+                  "interval_sec": 10,
+                  "num_retries": 0,
+                  "timeout_sec": 60
+                },
+                "webhook": "{{DCTOR_API_BE_SCHEME}}://{{DCTOR_API_BE_HOST}}:{{DCTOR_API_BE_PORT}}/api/notifications/on-insert-event-attendee"
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "facility",
+              "schema": "dctor"
+            },
+            "object_relationships": [
+              {
+                "name": "search_index",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "search_index_id": "uuid"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "search_index",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              }
+            ],
+            "array_relationships": [
+              {
+                "name": "photos",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "uuid": "owner_id"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "resource",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "reviews_received",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "uuid": "reviewee_id"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "review",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "user_relationships",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "uuid": "related_entity_id"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "iam_user_relationship",
+                      "schema": "public"
+                    }
+                  }
+                }
+              }
+            ],
+            "insert_permissions": [
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "check": {},
+                  "set": {
+                    "create_date": "x-hasura-Current-Timestamp",
+                    "created_by_id": "x-hasura-User-Id",
+                    "last_update_date": "x-hasura-Current-Timestamp",
+                    "last_updated_by_id": "x-hasura-User-Id"
+                  },
+                  "columns": [
+                    "bio",
+                    "create_date",
+                    "created_by_id",
+                    "delete_date",
+                    "email",
+                    "last_update_date",
+                    "last_updated_by_id",
+                    "name",
+                    "phone",
+                    "search_index_id",
+                    "sequence_id"
+                  ]
+                },
+                "comment": ""
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "dctor/role_admin",
+                "permission": {
+                  "columns": [
+                    "bio",
+                    "create_date",
+                    "created_by_id",
+                    "delete_date",
+                    "email",
+                    "last_update_date",
+                    "last_updated_by_id",
+                    "name",
+                    "phone",
+                    "search_index_id",
+                    "sequence_id",
+                    "uuid"
+                  ],
+                  "filter": {},
+                  "allow_aggregations": true
+                }
+              },
+              {
+                "role": "dctor/role_anonymous",
+                "permission": {
+                  "columns": [
+                    "bio",
+                    "email",
+                    "name",
+                    "phone",
+                    "search_index_id",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_clinic_admin",
+                "permission": {
+                  "columns": [
+                    "bio",
+                    "create_date",
+                    "created_by_id",
+                    "delete_date",
+                    "email",
+                    "last_update_date",
+                    "last_updated_by_id",
+                    "name",
+                    "search_index_id",
+                    "sequence_id",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_doctor",
+                "permission": {
+                  "columns": [
+                    "bio",
+                    "email",
+                    "name",
+                    "phone",
+                    "search_index_id",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "columns": [
+                    "bio",
+                    "email",
+                    "name",
+                    "phone",
+                    "search_index_id",
+                    "uuid"
+                  ],
+                  "filter": {},
+                  "allow_aggregations": true
+                }
+              },
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "columns": [
+                    "bio",
+                    "email",
+                    "name",
+                    "phone",
+                    "search_index_id",
+                    "uuid"
+                  ],
+                  "filter": {},
+                  "allow_aggregations": true
+                },
+                "comment": ""
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "insurance",
+              "schema": "dctor"
+            },
+            "configuration": {
+              "column_config": {},
+              "custom_column_names": {},
+              "custom_name": "insurance",
+              "custom_root_fields": {
+                "delete": "deleteInsurance",
+                "delete_by_pk": "deleteInsuranceById",
+                "insert": "addInsurance",
+                "insert_one": "addOneInsurance",
+                "select": "findInsurance",
+                "select_aggregate": "aggregateInsurance",
+                "select_by_pk": "findInsuranceById",
+                "update": "updateOneInsurance",
+                "update_by_pk": "updateInsuranceById",
+                "update_many": "updateInsurance"
+              }
+            },
+            "select_permissions": [
+              {
+                "role": "dctor/role_admin",
+                "permission": {
+                  "columns": [
+                    "emirates",
+                    "name",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_anonymous",
+                "permission": {
+                  "columns": [
+                    "emirates",
+                    "name",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_clinic_admin",
+                "permission": {
+                  "columns": [
+                    "emirates",
+                    "name",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_doctor",
+                "permission": {
+                  "columns": [
+                    "emirates",
+                    "name",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "columns": [
+                    "emirates",
+                    "name",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "insurance_relation",
+              "schema": "dctor"
+            },
+            "object_relationships": [
+              {
+                "name": "insurance",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "insurance_id": "uuid"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "insurance",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              }
+            ],
+            "insert_permissions": [
+              {
+                "role": "dctor/role_anonymous",
+                "permission": {
+                  "check": {},
+                  "set": {
+                    "create_date": "x-hasura-Current-Timestamp",
+                    "created_by_id": "x-hasura-User-Id",
+                    "last_update_date": "x-hasura-Current-Timestamp",
+                    "last_updated_by_id": "x-hasura-User-Id"
+                  },
+                  "columns": [
+                    "insurance_id",
+                    "owner_id",
+                    "owner_type"
+                  ]
+                },
+                "comment": ""
+              },
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "check": {},
+                  "set": {
+                    "create_date": "x-hasura-Current-Timestamp",
+                    "created_by_id": "x-hasura-User-Id",
+                    "last_update_date": "x-hasura-Current-Timestamp",
+                    "last_updated_by_id": "x-hasura-User-Id",
+                    "owner_id": "x-hasura-User-Id",
+                    "owner_type": "patient"
+                  },
+                  "columns": [
+                    "insurance_id"
+                  ]
+                }
+              },
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "check": {},
+                  "set": {
+                    "create_date": "x-hasura-Current-Timestamp",
+                    "created_by_id": "x-hasura-User-Id",
+                    "last_update_date": "x-hasura-Current-Timestamp",
+                    "last_updated_by_id": "x-hasura-User-Id"
+                  },
+                  "columns": [
+                    "create_date",
+                    "created_by_id",
+                    "delete_date",
+                    "insurance_id",
+                    "last_update_date",
+                    "last_updated_by_id",
+                    "owner_id",
+                    "owner_type",
+                    "sequence_id"
+                  ]
+                },
+                "comment": ""
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "dctor/role_admin",
+                "permission": {
+                  "columns": [
+                    "owner_type",
+                    "sequence_id",
+                    "create_date",
+                    "delete_date",
+                    "last_update_date",
+                    "created_by_id",
+                    "insurance_id",
+                    "last_updated_by_id",
+                    "owner_id",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_anonymous",
+                "permission": {
+                  "columns": [
+                    "insurance_id",
+                    "owner_id",
+                    "owner_type",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_clinic_admin",
+                "permission": {
+                  "columns": [
+                    "insurance_id",
+                    "owner_id",
+                    "owner_type",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_doctor",
+                "permission": {
+                  "columns": [
+                    "insurance_id",
+                    "owner_id",
+                    "owner_type",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "columns": [
+                    "insurance_id",
+                    "owner_id",
+                    "owner_type",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "columns": [
+                    "owner_type",
+                    "sequence_id",
+                    "create_date",
+                    "delete_date",
+                    "last_update_date",
+                    "created_by_id",
+                    "insurance_id",
+                    "last_updated_by_id",
+                    "owner_id",
+                    "uuid"
+                  ],
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ],
+            "update_permissions": [
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "columns": [
+                    "create_date",
+                    "created_by_id",
+                    "delete_date",
+                    "insurance_id",
+                    "last_update_date",
+                    "last_updated_by_id",
+                    "owner_id",
+                    "owner_type"
+                  ],
+                  "filter": {},
+                  "check": null,
+                  "set": {
+                    "create_date": "x-hasura-",
+                    "last_update_date": "x-hasura-Current-Timestamp",
+                    "last_updated_by_id": "x-hasura-User-Id"
+                  }
+                },
+                "comment": ""
+              }
+            ],
+            "delete_permissions": [
+              {
+                "role": "dctor/role_doctor",
+                "permission": {
+                  "filter": {
+                    "_or": [
+                      {
+                        "_and": [
+                          {
+                            "owner_id": {
+                              "_eq": "X-Hasura-User-Id"
+                            }
+                          },
+                          {
+                            "owner_type": {
+                              "_eq": "doctor"
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "filter": {
+                    "_and": [
+                      {
+                        "owner_id": {
+                          "_eq": "X-Hasura-User-Id"
+                        }
+                      },
+                      {
+                        "owner_type": {
+                          "_eq": "patient"
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "resource",
+              "schema": "dctor"
+            }
+          },
+          {
+            "table": {
+              "name": "review",
+              "schema": "dctor"
+            },
+            "select_permissions": [
+              {
+                "role": "dctor/role_admin",
+                "permission": {
+                  "columns": [
+                    "comments",
+                    "location",
+                    "rating",
+                    "reference_id",
+                    "reference_type",
+                    "reviewee_id",
+                    "reviewee_type",
+                    "reviewer_id",
+                    "reviewer_type",
+                    "treatment",
+                    "uuid"
+                  ],
+                  "filter": {},
+                  "allow_aggregations": true
+                },
+                "comment": ""
+              },
+              {
+                "role": "dctor/role_anonymous",
+                "permission": {
+                  "columns": [
+                    "comments",
+                    "location",
+                    "rating",
+                    "reference_id",
+                    "reference_type",
+                    "reviewee_id",
+                    "reviewee_type",
+                    "reviewer_id",
+                    "reviewer_type",
+                    "treatment",
+                    "uuid"
+                  ],
+                  "filter": {},
+                  "allow_aggregations": true
+                },
+                "comment": ""
+              },
+              {
+                "role": "dctor/role_clinic_admin",
+                "permission": {
+                  "columns": [
+                    "comments",
+                    "location",
+                    "rating",
+                    "reference_id",
+                    "reference_type",
+                    "reviewee_id",
+                    "reviewee_type",
+                    "reviewer_id",
+                    "reviewer_type",
+                    "treatment",
+                    "uuid"
+                  ],
+                  "filter": {},
+                  "allow_aggregations": true
+                },
+                "comment": ""
+              },
+              {
+                "role": "dctor/role_doctor",
+                "permission": {
+                  "columns": [
+                    "comments",
+                    "location",
+                    "rating",
+                    "reference_id",
+                    "reference_type",
+                    "reviewee_id",
+                    "reviewee_type",
+                    "reviewer_id",
+                    "reviewer_type",
+                    "treatment",
+                    "uuid"
+                  ],
+                  "filter": {},
+                  "allow_aggregations": true
+                },
+                "comment": ""
+              },
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "columns": [
+                    "comments",
+                    "location",
+                    "rating",
+                    "reference_id",
+                    "reference_type",
+                    "reviewee_id",
+                    "reviewee_type",
+                    "reviewer_id",
+                    "reviewer_type",
+                    "treatment",
+                    "uuid"
+                  ],
+                  "filter": {},
+                  "allow_aggregations": true
+                },
+                "comment": ""
+              },
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "columns": [
+                    "comments",
+                    "location",
+                    "rating",
+                    "reference_id",
+                    "reference_type",
+                    "reviewee_id",
+                    "reviewee_type",
+                    "reviewer_id",
+                    "reviewer_type",
+                    "treatment",
+                    "uuid"
+                  ],
+                  "filter": {},
+                  "allow_aggregations": true
+                },
+                "comment": ""
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "scheduled_action",
+              "schema": "dctor"
+            },
+            "insert_permissions": [
+              {
+                "role": "dctor/role_doctor",
+                "permission": {
+                  "check": {},
+                  "columns": [
+                    "execution_date",
+                    "name",
+                    "parameters"
+                  ]
+                }
+              },
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "check": {},
+                  "columns": [
+                    "execution_date",
+                    "name",
+                    "parameters"
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "search_index",
+              "schema": "dctor"
+            },
+            "object_relationships": [
+              {
+                "name": "facility",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "uuid": "search_index_id"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "facility",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "user",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "uuid": "search_index_id"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "iam_user",
+                      "schema": "public"
+                    }
+                  }
+                }
+              }
+            ],
+            "array_relationships": [
+              {
+                "name": "addresses",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "source_id": "owner_id",
+                      "source_type": "owner_type"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "address",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "availability",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "source_id": "owner_id",
+                      "source_type": "owner_type"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "availability",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "insurance_list",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "source_id": "owner_id",
+                      "source_type": "owner_type"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "insurance_relation",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "treatments",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "source_id": "owner_id",
+                      "source_type": "owner_type"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "treatment_relation",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              }
+            ],
+            "insert_permissions": [
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "check": {},
+                  "set": {
+                    "create_date": "x-hasura-Current-Timestamp",
+                    "created_by_id": "x-hasura-User-Id",
+                    "last_update_date": "x-hasura-Current-Timestamp",
+                    "last_updated_by_id": "x-hasura-User-Id"
+                  },
+                  "columns": [
+                    "create_date",
+                    "created_by_id",
+                    "delete_date",
+                    "last_update_date",
+                    "last_updated_by_id",
+                    "name",
+                    "source_id",
+                    "source_type"
+                  ]
+                },
+                "comment": ""
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "dctor/role_admin",
+                "permission": {
+                  "columns": [
+                    "name",
+                    "source_type",
+                    "sequence_id",
+                    "create_date",
+                    "delete_date",
+                    "last_update_date",
+                    "created_by_id",
+                    "last_updated_by_id",
+                    "source_id",
+                    "uuid"
+                  ],
+                  "filter": {},
+                  "allow_aggregations": true
+                }
+              },
+              {
+                "role": "dctor/role_anonymous",
+                "permission": {
+                  "columns": [
+                    "name",
+                    "source_id",
+                    "source_type"
+                  ],
+                  "filter": {
+                    "source_type": {
+                      "_in": [
+                        "clinic",
+                        "doctor"
+                      ]
+                    }
+                  },
+                  "allow_aggregations": true
+                }
+              },
+              {
+                "role": "dctor/role_clinic_admin",
+                "permission": {
+                  "columns": [
+                    "name",
+                    "source_id",
+                    "source_type",
+                    "uuid"
+                  ],
+                  "filter": {},
+                  "allow_aggregations": true
+                }
+              },
+              {
+                "role": "dctor/role_doctor",
+                "permission": {
+                  "columns": [
+                    "name",
+                    "source_id",
+                    "source_type",
+                    "uuid"
+                  ],
+                  "filter": {},
+                  "allow_aggregations": true
+                }
+              },
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "columns": [
+                    "name",
+                    "source_id",
+                    "source_type",
+                    "uuid"
+                  ],
+                  "filter": {
+                    "source_type": {
+                      "_in": [
+                        "doctor",
+                        "clinic"
+                      ]
+                    }
+                  },
+                  "allow_aggregations": true
+                }
+              },
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "columns": [
+                    "create_date",
+                    "created_by_id",
+                    "delete_date",
+                    "last_update_date",
+                    "last_updated_by_id",
+                    "name",
+                    "sequence_id",
+                    "source_id",
+                    "source_type",
+                    "uuid"
+                  ],
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ],
+            "delete_permissions": [
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "treatment",
+              "schema": "dctor"
+            },
+            "configuration": {
+              "column_config": {},
+              "custom_column_names": {},
+              "custom_name": "treatment",
+              "custom_root_fields": {
+                "delete": "deleteTreatments",
+                "delete_by_pk": "deleteTreatmentById",
+                "insert": "addTreatments",
+                "insert_one": "addTreatment",
+                "select": "findTreatments",
+                "select_aggregate": "aggregateTreatments",
+                "select_by_pk": "findTreatmentById",
+                "update": "updateTreatment",
+                "update_by_pk": "updateTreatmentById",
+                "update_many": "updateTreatments"
+              }
+            },
+            "object_relationships": [
+              {
+                "name": "category",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "category_id": "uuid"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "treatment_category",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "dctor/role_admin",
+                "permission": {
+                  "columns": [
+                    "category_id",
+                    "cpt_code",
+                    "name",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_anonymous",
+                "permission": {
+                  "columns": [
+                    "category_id",
+                    "cpt_code",
+                    "name",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_clinic_admin",
+                "permission": {
+                  "columns": [
+                    "category_id",
+                    "cpt_code",
+                    "name",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_doctor",
+                "permission": {
+                  "columns": [
+                    "category_id",
+                    "cpt_code",
+                    "name",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "columns": [
+                    "category_id",
+                    "cpt_code",
+                    "name",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "treatment_category",
+              "schema": "dctor"
+            },
+            "object_relationships": [
+              {
+                "name": "parent",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "parent_id": "uuid"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "treatment_category",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              }
+            ],
+            "array_relationships": [
+              {
+                "name": "sub_categories",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "uuid": "parent_id"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "treatment_category",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "dctor/role_admin",
+                "permission": {
+                  "columns": [
+                    "icon_url",
+                    "name",
+                    "parent_id",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_anonymous",
+                "permission": {
+                  "columns": [
+                    "icon_url",
+                    "name",
+                    "parent_id",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_clinic_admin",
+                "permission": {
+                  "columns": [
+                    "icon_url",
+                    "name",
+                    "parent_id",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_doctor",
+                "permission": {
+                  "columns": [
+                    "icon_url",
+                    "name",
+                    "parent_id",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "columns": [
+                    "icon_url",
+                    "name",
+                    "parent_id",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "treatment_relation",
+              "schema": "dctor"
+            },
+            "object_relationships": [
+              {
+                "name": "treatment",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "treatment_id": "uuid"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "treatment",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              }
+            ],
+            "insert_permissions": [
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "check": {},
+                  "set": {
+                    "create_date": "x-hasura-Current-Timestamp",
+                    "created_by_id": "x-hasura-User-Id",
+                    "last_update_date": "x-hasura-Current-Timestamp",
+                    "last_updated_by_id": "x-hasura-User-Id"
+                  },
+                  "columns": [
+                    "create_date",
+                    "created_by_id",
+                    "currency",
+                    "delete_date",
+                    "last_update_date",
+                    "last_updated_by_id",
+                    "owner_id",
+                    "owner_type",
+                    "price",
+                    "sequence_id",
+                    "treatment_id"
+                  ]
+                },
+                "comment": ""
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "dctor/role_admin",
+                "permission": {
+                  "columns": [
+                    "currency",
+                    "owner_id",
+                    "owner_type",
+                    "price",
+                    "treatment_id",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_anonymous",
+                "permission": {
+                  "columns": [
+                    "currency",
+                    "owner_id",
+                    "owner_type",
+                    "price",
+                    "treatment_id",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_clinic_admin",
+                "permission": {
+                  "columns": [
+                    "currency",
+                    "owner_id",
+                    "owner_type",
+                    "price",
+                    "treatment_id",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_doctor",
+                "permission": {
+                  "columns": [
+                    "currency",
+                    "owner_id",
+                    "owner_type",
+                    "price",
+                    "treatment_id",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "columns": [
+                    "currency",
+                    "owner_id",
+                    "owner_type",
+                    "price",
+                    "treatment_id",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "columns": [
+                    "currency",
+                    "owner_type",
+                    "sequence_id",
+                    "price",
+                    "create_date",
+                    "delete_date",
+                    "last_update_date",
+                    "created_by_id",
+                    "last_updated_by_id",
+                    "owner_id",
+                    "treatment_id",
+                    "uuid"
+                  ],
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ],
+            "delete_permissions": [
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "iam_dctor_adapter",
+              "schema": "public"
+            },
+            "insert_permissions": [
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "check": {},
+                  "columns": [
+                    "ptype",
+                    "v0",
+                    "v1",
+                    "v2",
+                    "v3",
+                    "v4",
+                    "v5"
+                  ]
+                },
+                "comment": ""
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "columns": [
+                    "ptype",
+                    "v0",
+                    "v1",
+                    "v2",
+                    "v3",
+                    "v4",
+                    "v5"
+                  ],
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ],
+            "update_permissions": [
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "columns": [
+                    "ptype",
+                    "v0",
+                    "v1",
+                    "v2",
+                    "v3",
+                    "v4",
+                    "v5"
+                  ],
+                  "filter": {},
+                  "check": {}
+                },
+                "comment": ""
+              }
+            ],
+            "delete_permissions": [
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "iam_user",
+              "schema": "public"
+            },
+            "configuration": {
+              "column_config": {
+                "display_name": {
+                  "custom_name": "name"
+                },
+                "name": {
+                  "custom_name": "username"
+                }
+              },
+              "custom_column_names": {
+                "display_name": "name",
+                "name": "username"
+              },
+              "custom_name": "user",
+              "custom_root_fields": {
+                "delete": "deleteUser",
+                "delete_by_pk": "deleteUserById",
+                "insert": "registerUsers",
+                "insert_one": "registerUser",
+                "select": "findUsers",
+                "select_aggregate": "aggregateUsers",
+                "select_by_pk": "findUserById",
+                "update": "updateUser",
+                "update_by_pk": "updateUserById",
+                "update_many": "updateUsers"
+              }
+            },
+            "object_relationships": [
+              {
+                "name": "search_index",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "search_index_id": "uuid"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "search_index",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              }
+            ],
+            "array_relationships": [
+              {
+                "name": "insurance_list",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "id": "owner_id"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "insurance_relation",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "left_relationships",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "id": "left_user_id"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "iam_user_relationship",
+                      "schema": "public"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "reviews_given",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "id": "reviewer_id"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "review",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "reviews_received",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "id": "reviewee_id"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "review",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              }
+            ],
+            "computed_fields": [
+              {
+                "name": "properties_obj",
+                "definition": {
+                  "function": {
+                    "name": "iam_user_properties",
+                    "schema": "public"
+                  }
+                }
+              },
+              {
+                "name": "tags_obj",
+                "definition": {
+                  "function": {
+                    "name": "iam_user_tags",
+                    "schema": "public"
+                  }
+                }
+              }
+            ],
+            "insert_permissions": [
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "check": {},
+                  "columns": [
+                    "sequence_id",
+                    "email_verified",
+                    "is_admin",
+                    "is_default_avatar",
+                    "is_deleted",
+                    "is_forbidden",
+                    "is_global_admin",
+                    "is_online",
+                    "mfa_email_enabled",
+                    "mfa_phone_enabled",
+                    "managedAccounts",
+                    "webauthnCredentials",
+                    "access_key",
+                    "access_secret",
+                    "adfs",
+                    "affiliation",
+                    "alipay",
+                    "amazon",
+                    "apple",
+                    "auth0",
+                    "avatar",
+                    "avatar_type",
+                    "azuread",
+                    "baidu",
+                    "battlenet",
+                    "bilibili",
+                    "birthday",
+                    "bitbucket",
+                    "box",
+                    "casdoor",
+                    "cloudfoundry",
+                    "country_code",
+                    "created_ip",
+                    "custom",
+                    "dailymotion",
+                    "deezer",
+                    "digitalocean",
+                    "dingtalk",
+                    "discord",
+                    "display_name",
+                    "douyin",
+                    "dropbox",
+                    "education",
+                    "email",
+                    "eveonline",
+                    "facebook",
+                    "first_name",
+                    "fitbit",
+                    "gender",
+                    "gitea",
+                    "gitee",
+                    "github",
+                    "gitlab",
+                    "google",
+                    "groups",
+                    "hash",
+                    "heroku",
+                    "homepage",
+                    "id_card",
+                    "id_card_type",
+                    "influxcloud",
+                    "infoflow",
+                    "instagram",
+                    "intercom",
+                    "kakao",
+                    "language",
+                    "lark",
+                    "lastfm",
+                    "last_name",
+                    "last_signin_ip",
+                    "last_signin_time",
+                    "last_signin_wrong_time",
+                    "ldap",
+                    "line",
+                    "linkedin",
+                    "location",
+                    "mailru",
+                    "meetup",
+                    "metamask",
+                    "microsoftonline",
+                    "name",
+                    "naver",
+                    "nextcloud",
+                    "okta",
+                    "onedrive",
+                    "oura",
+                    "owner",
+                    "password",
+                    "password_salt",
+                    "password_type",
+                    "patreon",
+                    "paypal",
+                    "permanent_avatar",
+                    "phone",
+                    "preferred_mfa_type",
+                    "pre_hash",
+                    "qq",
+                    "recovery_codes",
+                    "region",
+                    "salesforce",
+                    "shopify",
+                    "signup_application",
+                    "slack",
+                    "soundcloud",
+                    "spotify",
+                    "steam",
+                    "strava",
+                    "stripe",
+                    "tag",
+                    "tiktok",
+                    "title",
+                    "totp_secret",
+                    "tumblr",
+                    "twitch",
+                    "twitter",
+                    "type",
+                    "typetalk",
+                    "uber",
+                    "vk",
+                    "web3onboard",
+                    "wechat",
+                    "wecom",
+                    "weibo",
+                    "wepay",
+                    "xero",
+                    "yahoo",
+                    "yammer",
+                    "yandex",
+                    "zoom",
+                    "karma",
+                    "ranking",
+                    "score",
+                    "signin_wrong_times",
+                    "properties",
+                    "address",
+                    "bio",
+                    "multi_factor_auths",
+                    "permissions",
+                    "roles",
+                    "created_time",
+                    "updated_time",
+                    "id",
+                    "search_index_id"
+                  ]
+                },
+                "comment": ""
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "dctor/role_admin",
+                "permission": {
+                  "columns": [
+                    "avatar",
+                    "bio",
+                    "birthday",
+                    "display_name",
+                    "email",
+                    "first_name",
+                    "gender",
+                    "id",
+                    "last_name",
+                    "name",
+                    "owner",
+                    "phone",
+                    "tag"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_anonymous",
+                "permission": {
+                  "columns": [
+                    "avatar",
+                    "display_name",
+                    "id",
+                    "name"
+                  ],
+                  "filter": {
+                    "tag": {
+                      "_like": "%\"dctor/role_doctor\"%"
+                    }
+                  }
+                }
+              },
+              {
+                "role": "dctor/role_clinic_admin",
+                "permission": {
+                  "columns": [
+                    "avatar",
+                    "bio",
+                    "birthday",
+                    "display_name",
+                    "email",
+                    "first_name",
+                    "gender",
+                    "id",
+                    "last_name",
+                    "name",
+                    "owner",
+                    "phone",
+                    "properties",
+                    "search_index_id",
+                    "tag"
+                  ],
+                  "filter": {},
+                  "allow_aggregations": true
+                }
+              },
+              {
+                "role": "dctor/role_doctor",
+                "permission": {
+                  "columns": [
+                    "avatar",
+                    "bio",
+                    "birthday",
+                    "display_name",
+                    "email",
+                    "first_name",
+                    "gender",
+                    "id",
+                    "last_name",
+                    "name",
+                    "owner",
+                    "phone",
+                    "properties",
+                    "tag"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "columns": [
+                    "avatar",
+                    "bio",
+                    "birthday",
+                    "display_name",
+                    "email",
+                    "first_name",
+                    "gender",
+                    "id",
+                    "last_name",
+                    "name",
+                    "owner",
+                    "phone",
+                    "properties",
+                    "tag"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "columns": [
+                    "sequence_id",
+                    "email_verified",
+                    "is_admin",
+                    "is_default_avatar",
+                    "is_deleted",
+                    "is_forbidden",
+                    "is_global_admin",
+                    "is_online",
+                    "mfa_email_enabled",
+                    "mfa_phone_enabled",
+                    "managedAccounts",
+                    "webauthnCredentials",
+                    "access_key",
+                    "access_secret",
+                    "adfs",
+                    "affiliation",
+                    "alipay",
+                    "amazon",
+                    "apple",
+                    "auth0",
+                    "avatar",
+                    "avatar_type",
+                    "azuread",
+                    "baidu",
+                    "battlenet",
+                    "bilibili",
+                    "birthday",
+                    "bitbucket",
+                    "box",
+                    "casdoor",
+                    "cloudfoundry",
+                    "country_code",
+                    "created_ip",
+                    "custom",
+                    "dailymotion",
+                    "deezer",
+                    "digitalocean",
+                    "dingtalk",
+                    "discord",
+                    "display_name",
+                    "douyin",
+                    "dropbox",
+                    "education",
+                    "email",
+                    "eveonline",
+                    "facebook",
+                    "first_name",
+                    "fitbit",
+                    "gender",
+                    "gitea",
+                    "gitee",
+                    "github",
+                    "gitlab",
+                    "google",
+                    "groups",
+                    "hash",
+                    "heroku",
+                    "homepage",
+                    "id_card",
+                    "id_card_type",
+                    "influxcloud",
+                    "infoflow",
+                    "instagram",
+                    "intercom",
+                    "kakao",
+                    "language",
+                    "lark",
+                    "lastfm",
+                    "last_name",
+                    "last_signin_ip",
+                    "last_signin_time",
+                    "last_signin_wrong_time",
+                    "ldap",
+                    "line",
+                    "linkedin",
+                    "location",
+                    "mailru",
+                    "meetup",
+                    "metamask",
+                    "microsoftonline",
+                    "name",
+                    "naver",
+                    "nextcloud",
+                    "okta",
+                    "onedrive",
+                    "oura",
+                    "owner",
+                    "password",
+                    "password_salt",
+                    "password_type",
+                    "patreon",
+                    "paypal",
+                    "permanent_avatar",
+                    "phone",
+                    "preferred_mfa_type",
+                    "pre_hash",
+                    "qq",
+                    "recovery_codes",
+                    "region",
+                    "salesforce",
+                    "shopify",
+                    "signup_application",
+                    "slack",
+                    "soundcloud",
+                    "spotify",
+                    "steam",
+                    "strava",
+                    "stripe",
+                    "tag",
+                    "tiktok",
+                    "title",
+                    "totp_secret",
+                    "tumblr",
+                    "twitch",
+                    "twitter",
+                    "type",
+                    "typetalk",
+                    "uber",
+                    "vk",
+                    "web3onboard",
+                    "wechat",
+                    "wecom",
+                    "weibo",
+                    "wepay",
+                    "xero",
+                    "yahoo",
+                    "yammer",
+                    "yandex",
+                    "zoom",
+                    "karma",
+                    "ranking",
+                    "score",
+                    "signin_wrong_times",
+                    "properties",
+                    "address",
+                    "bio",
+                    "multi_factor_auths",
+                    "permissions",
+                    "roles",
+                    "created_time",
+                    "updated_time",
+                    "id",
+                    "search_index_id"
+                  ],
+                  "computed_fields": [
+                    "properties_obj",
+                    "tags_obj"
+                  ],
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ],
+            "update_permissions": [
+              {
+                "role": "dctor/role_doctor",
+                "permission": {
+                  "columns": [
+                    "avatar",
+                    "bio",
+                    "birthday",
+                    "email",
+                    "first_name",
+                    "gender",
+                    "last_name",
+                    "phone",
+                    "properties"
+                  ],
+                  "filter": {},
+                  "check": {}
+                }
+              },
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "columns": [
+                    "avatar",
+                    "bio",
+                    "birthday",
+                    "email",
+                    "first_name",
+                    "gender",
+                    "last_name",
+                    "properties"
+                  ],
+                  "filter": {
+                    "id": {
+                      "_eq": "X-Hasura-User-Id"
+                    }
+                  },
+                  "check": null,
+                  "set": {
+                    "updated_time": "x-hasura-Current-Timestamp"
+                  }
+                }
+              },
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "columns": [
+                    "sequence_id",
+                    "email_verified",
+                    "is_admin",
+                    "is_default_avatar",
+                    "is_deleted",
+                    "is_forbidden",
+                    "is_global_admin",
+                    "is_online",
+                    "mfa_email_enabled",
+                    "mfa_phone_enabled",
+                    "managedAccounts",
+                    "webauthnCredentials",
+                    "access_key",
+                    "access_secret",
+                    "adfs",
+                    "affiliation",
+                    "alipay",
+                    "amazon",
+                    "apple",
+                    "auth0",
+                    "avatar",
+                    "avatar_type",
+                    "azuread",
+                    "baidu",
+                    "battlenet",
+                    "bilibili",
+                    "birthday",
+                    "bitbucket",
+                    "box",
+                    "casdoor",
+                    "cloudfoundry",
+                    "country_code",
+                    "created_ip",
+                    "custom",
+                    "dailymotion",
+                    "deezer",
+                    "digitalocean",
+                    "dingtalk",
+                    "discord",
+                    "display_name",
+                    "douyin",
+                    "dropbox",
+                    "education",
+                    "email",
+                    "eveonline",
+                    "facebook",
+                    "first_name",
+                    "fitbit",
+                    "gender",
+                    "gitea",
+                    "gitee",
+                    "github",
+                    "gitlab",
+                    "google",
+                    "groups",
+                    "hash",
+                    "heroku",
+                    "homepage",
+                    "id_card",
+                    "id_card_type",
+                    "influxcloud",
+                    "infoflow",
+                    "instagram",
+                    "intercom",
+                    "kakao",
+                    "language",
+                    "lark",
+                    "lastfm",
+                    "last_name",
+                    "last_signin_ip",
+                    "last_signin_time",
+                    "last_signin_wrong_time",
+                    "ldap",
+                    "line",
+                    "linkedin",
+                    "location",
+                    "mailru",
+                    "meetup",
+                    "metamask",
+                    "microsoftonline",
+                    "name",
+                    "naver",
+                    "nextcloud",
+                    "okta",
+                    "onedrive",
+                    "oura",
+                    "owner",
+                    "password",
+                    "password_salt",
+                    "password_type",
+                    "patreon",
+                    "paypal",
+                    "permanent_avatar",
+                    "phone",
+                    "preferred_mfa_type",
+                    "pre_hash",
+                    "qq",
+                    "recovery_codes",
+                    "region",
+                    "salesforce",
+                    "shopify",
+                    "signup_application",
+                    "slack",
+                    "soundcloud",
+                    "spotify",
+                    "steam",
+                    "strava",
+                    "stripe",
+                    "tag",
+                    "tiktok",
+                    "title",
+                    "totp_secret",
+                    "tumblr",
+                    "twitch",
+                    "twitter",
+                    "type",
+                    "typetalk",
+                    "uber",
+                    "vk",
+                    "web3onboard",
+                    "wechat",
+                    "wecom",
+                    "weibo",
+                    "wepay",
+                    "xero",
+                    "yahoo",
+                    "yammer",
+                    "yandex",
+                    "zoom",
+                    "karma",
+                    "ranking",
+                    "score",
+                    "signin_wrong_times",
+                    "properties",
+                    "address",
+                    "bio",
+                    "multi_factor_auths",
+                    "permissions",
+                    "roles",
+                    "created_time",
+                    "updated_time",
+                    "id",
+                    "search_index_id"
+                  ],
+                  "filter": {},
+                  "check": {}
+                },
+                "comment": ""
+              }
+            ],
+            "delete_permissions": [
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "iam_user_link",
+              "schema": "public"
+            },
+            "insert_permissions": [
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "check": {},
+                  "set": {
+                    "create_date": "x-hasura-Current-Timestamp",
+                    "created_by_id": "x-hasura-User-Id",
+                    "last_update_date": "x-hasura-Current-Timestamp",
+                    "last_updated_by_id": "x-hasura-User-Id"
+                  },
+                  "columns": [
+                    "owner_id",
+                    "reference_id",
+                    "reference_type"
+                  ]
+                },
+                "comment": ""
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "columns": [
+                    "owner_id",
+                    "reference_id",
+                    "reference_type",
+                    "uuid"
+                  ],
+                  "filter": {},
+                  "allow_aggregations": true
+                },
+                "comment": ""
+              }
+            ],
+            "delete_permissions": [
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "iam_user_relationship",
+              "schema": "public"
+            },
+            "object_relationships": [
+              {
+                "name": "left_user",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "left_user_id": "id"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "iam_user",
+                      "schema": "public"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "related_entity_as_facility",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "related_entity_id": "uuid"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "facility",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              }
+            ],
+            "array_relationships": [
+              {
+                "name": "addresses",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "relationship_type": "owner_type",
+                      "uuid": "owner_id"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "address",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "availability",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "relationship_type": "owner_type",
+                      "uuid": "owner_id"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "availability",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "insurance_list",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "relationship_type": "owner_type",
+                      "uuid": "owner_id"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "insurance_relation",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "treatments",
+                "using": {
+                  "manual_configuration": {
+                    "column_mapping": {
+                      "relationship_type": "owner_type",
+                      "uuid": "owner_id"
+                    },
+                    "insertion_order": null,
+                    "remote_table": {
+                      "name": "treatment_relation",
+                      "schema": "dctor"
+                    }
+                  }
+                }
+              }
+            ],
+            "insert_permissions": [
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "check": {},
+                  "set": {
+                    "create_date": "x-hasura-Current-Timestamp",
+                    "created_by_id": "x-hasura-User-Id",
+                    "last_update_date": "x-hasura-Current-Timestamp",
+                    "last_updated_by_id": "x-hasura-User-Id"
+                  },
+                  "columns": [
+                    "create_date",
+                    "created_by_id",
+                    "delete_date",
+                    "last_update_date",
+                    "last_updated_by_id",
+                    "left_user_id",
+                    "related_entity_id",
+                    "relationship_type",
+                    "sequence_id"
+                  ]
+                },
+                "comment": ""
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "dctor/role_admin",
+                "permission": {
+                  "columns": [
+                    "relationship_type",
+                    "sequence_id",
+                    "create_date",
+                    "delete_date",
+                    "last_update_date",
+                    "created_by_id",
+                    "last_updated_by_id",
+                    "left_user_id",
+                    "related_entity_id",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_anonymous",
+                "permission": {
+                  "columns": [
+                    "left_user_id",
+                    "related_entity_id",
+                    "relationship_type",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_clinic_admin",
+                "permission": {
+                  "columns": [
+                    "relationship_type",
+                    "sequence_id",
+                    "create_date",
+                    "delete_date",
+                    "last_update_date",
+                    "created_by_id",
+                    "last_updated_by_id",
+                    "left_user_id",
+                    "related_entity_id",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_doctor",
+                "permission": {
+                  "columns": [
+                    "left_user_id",
+                    "related_entity_id",
+                    "relationship_type",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_patient",
+                "permission": {
+                  "columns": [
+                    "left_user_id",
+                    "related_entity_id",
+                    "relationship_type",
+                    "uuid"
+                  ],
+                  "filter": {}
+                }
+              },
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "columns": [
+                    "relationship_type",
+                    "sequence_id",
+                    "create_date",
+                    "delete_date",
+                    "last_update_date",
+                    "created_by_id",
+                    "last_updated_by_id",
+                    "left_user_id",
+                    "related_entity_id",
+                    "uuid"
+                  ],
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ],
+            "update_permissions": [
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "columns": [
+                    "create_date",
+                    "created_by_id",
+                    "delete_date",
+                    "last_update_date",
+                    "last_updated_by_id",
+                    "left_user_id",
+                    "related_entity_id",
+                    "relationship_type"
+                  ],
+                  "filter": {},
+                  "check": {},
+                  "set": {
+                    "last_update_date": "x-hasura-Current-Timestamp",
+                    "last_updated_by_id": "x-hasura-User-Id"
+                  }
+                },
+                "comment": ""
+              }
+            ],
+            "delete_permissions": [
+              {
+                "role": "dctor/role_service_account",
+                "permission": {
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ]
+          }
+        ],
+        "native_queries": [
+          {
+            "arguments": {
+              "dtend": {
+                "description": "",
+                "nullable": true,
+                "type": "timestamp"
+              },
+              "dtstart": {
+                "description": "",
+                "nullable": true,
+                "type": "timestamp"
+              },
+              "user_id": {
+                "description": "",
+                "nullable": false,
+                "type": "text"
+              }
+            },
+            "code": "SELECT\n    t4.left_user_id::uuid \"user_id\",\n    (t1 + t2.time_start::time without time zone)::timestamp \"dtstart\",\n    (t1 + t2.time_end::time without time zone)::timestamp \"dtend\",\n    COALESCE((not tsrange(t1 + t2.time_start::time without time zone, t1 + t2.time_end::time without time zone) && blocked_availability)::boolean, true) \"is_available\",\n    t4.related_entity_id \"clinic_id\"\n    \nFROM generate_series(\n    {{dtstart}}::timestamp,\n    {{dtend}}::timestamp,\n    '1 day'::interval\n) t1\nJOIN dctor.availability t2 ON extract(dow from t1) = t2.weekday\nJOIN public.iam_user_relationship t4 ON t4.uuid = t2.owner_id AND t4.relationship_type = t2.owner_type\nLEFT OUTER JOIN (\n    SELECT\n        t1.attendee_id,\n\t\tt2.clinic_id,\n        range_agg(\n            tsrange(\n                dtstart::timestamp without time zone,\n                dtend::timestamp without time zone\n            )\n        ) \"blocked_availability\"\n        FROM dctor.event_attendee t1\n        JOIN dctor.event t2 ON t1.event_id = t2.\"uuid\"\n\tWHERE dtstart IS NOT NULL\n        AND tsrange(\n            t2.dtstart::timestamp without time zone,\n            t2.dtend::timestamp without time zone\n        ) && tsrange(\n            {{dtstart}}::timestamp,\n            {{dtend}}::timestamp + '1 day'::interval\n        )\n    GROUP BY t1.attendee_id, t2.clinic_id\n) t3 ON t4.left_user_id = t3.attendee_id AND t3.clinic_id = t4.related_entity_id\nWHERE t4.left_user_id = {{user_id}}::uuid\nORDER BY dtstart",
+            "returns": "iam_user_calendar",
+            "root_field_name": "iam_user_calendar"
+          },
+          {
+            "arguments": {
+              "user_id": {
+                "description": "",
+                "nullable": false,
+                "type": "varchar"
+              }
+            },
+            "code": "SELECT t1.id, t1.enum_rating rating, COALESCE(t3.count, 0) \"count\"\n  FROM (\n  \tSELECT t2.id, enum_rating\n\t  FROM generate_series(\n\t\t1,\n\t\t5,\n\t\t1\n\t  ) enum_rating, (\n\t\tSELECT *\n\t\t  FROM public.iam_user\n\t\t WHERE \"owner\" = 'dctor'\n\t\t   AND \"id\" = {{user_id}}::uuid\n\t  ) t2\n  ) t1\n  LEFT OUTER JOIN (\n\t  SELECT t3.reviewer_id, t3.rating, COUNT(*) \"count\"\n\t    FROM dctor.review t3\n\t   WHERE t3.reviewer_id = {{user_id}}::uuid\n\t  \tAND t3.reviewer_type IN ('admin', 'clinic_admin', 'doctor', 'patient')\n\tGROUP BY t3.reviewer_id, t3.rating\n  ) t3 ON t3.reviewer_id = t1.id\n\tAND t3.rating = t1.enum_rating",
+            "returns": "reviews_received_count",
+            "root_field_name": "reviews_received_count"
+          }
+        ],
+        "logical_models": [
+          {
+            "fields": [
+              {
+                "name": "user_id",
+                "type": {
+                  "nullable": true,
+                  "scalar": "uuid"
+                }
+              },
+              {
+                "name": "dtstart",
+                "type": {
+                  "nullable": true,
+                  "scalar": "timestamp"
+                }
+              },
+              {
+                "name": "dtend",
+                "type": {
+                  "nullable": true,
+                  "scalar": "timestamp"
+                }
+              },
+              {
+                "name": "is_available",
+                "type": {
+                  "nullable": true,
+                  "scalar": "boolean"
+                }
+              },
+              {
+                "name": "clinic_id",
+                "type": {
+                  "nullable": true,
+                  "scalar": "uuid"
+                }
+              }
+            ],
+            "name": "iam_user_calendar",
+            "select_permissions": [
+              {
+                "permission": {
+                  "columns": [
+                    "user_id",
+                    "dtstart",
+                    "dtend",
+                    "is_available",
+                    "clinic_id"
+                  ],
+                  "filter": {}
+                },
+                "role": "dctor/role_admin"
+              },
+              {
+                "permission": {
+                  "columns": [
+                    "user_id",
+                    "dtstart",
+                    "dtend",
+                    "is_available",
+                    "clinic_id"
+                  ],
+                  "filter": {}
+                },
+                "role": "dctor/role_anonymous"
+              },
+              {
+                "permission": {
+                  "columns": [
+                    "user_id",
+                    "dtstart",
+                    "dtend",
+                    "is_available",
+                    "clinic_id"
+                  ],
+                  "filter": {}
+                },
+                "role": "dctor/role_clinic_admin"
+              },
+              {
+                "permission": {
+                  "columns": [
+                    "user_id",
+                    "dtstart",
+                    "dtend",
+                    "is_available",
+                    "clinic_id"
+                  ],
+                  "filter": {}
+                },
+                "role": "dctor/role_doctor"
+              },
+              {
+                "permission": {
+                  "columns": [
+                    "user_id",
+                    "dtstart",
+                    "dtend",
+                    "is_available",
+                    "clinic_id"
+                  ],
+                  "filter": {}
+                },
+                "role": "dctor/role_patient"
+              },
+              {
+                "permission": {
+                  "columns": [
+                    "user_id",
+                    "dtstart",
+                    "dtend",
+                    "is_available",
+                    "clinic_id"
+                  ],
+                  "filter": {}
+                },
+                "role": "dctor/role_service_account"
+              }
+            ]
+          },
+          {
+            "fields": [
+              {
+                "name": "id",
+                "type": {
+                  "nullable": false,
+                  "scalar": "uuid"
+                }
+              },
+              {
+                "name": "rating",
+                "type": {
+                  "nullable": false,
+                  "scalar": "integer"
+                }
+              },
+              {
+                "name": "count",
+                "type": {
+                  "nullable": false,
+                  "scalar": "bigint"
+                }
+              }
+            ],
+            "name": "reviews_received_count",
+            "select_permissions": [
+              {
+                "permission": {
+                  "columns": [
+                    "id",
+                    "rating",
+                    "count"
+                  ],
+                  "filter": {}
+                },
+                "role": "dctor/role_admin"
+              },
+              {
+                "permission": {
+                  "columns": [
+                    "rating",
+                    "id",
+                    "count"
+                  ],
+                  "filter": {}
+                },
+                "role": "dctor/role_anonymous"
+              },
+              {
+                "permission": {
+                  "columns": [
+                    "id",
+                    "rating",
+                    "count"
+                  ],
+                  "filter": {}
+                },
+                "role": "dctor/role_clinic_admin"
+              },
+              {
+                "permission": {
+                  "columns": [
+                    "id",
+                    "rating",
+                    "count"
+                  ],
+                  "filter": {}
+                },
+                "role": "dctor/role_doctor"
+              },
+              {
+                "permission": {
+                  "columns": [
+                    "id",
+                    "rating",
+                    "count"
+                  ],
+                  "filter": {}
+                },
+                "role": "dctor/role_patient"
+              },
+              {
+                "permission": {
+                  "columns": [
+                    "id",
+                    "rating",
+                    "count"
+                  ],
+                  "filter": {}
+                },
+                "role": "dctor/role_service_account"
+              }
+            ]
+          }
+        ],
+        "configuration": {
+          "connection_info": {
+            "database_url": {
+              "connection_parameters": {
+                "database": "dctordb",
+                "host": "rdb",
+                "password": "d0ctr123456$$!",
+                "port": 5432,
+                "username": "doctrplatform"
+              }
+            },
+            "isolation_level": "read-committed",
+            "use_prepared_statements": false
+          }
+        }
+      }
+    ],
+    "query_collections": [
+      {
+        "name": "allowed-queries",
+        "definition": {
+          "queries": [
+            {
+              "name": "Add Review",
+              "query": "mutation AddReview($review: dctor_review_insert_input = {}) {\n  review: insert_dctor_review_one(object: $review) {\n      id: uuid\n  }\n}"
+            },
+            {
+              "name": "List Reviews",
+              "query": "query DoctorReviewQuery($where: dctor_review_bool_exp = {}, $limit: Int = null, $offset: Int = null) {\n  reviews: dctor_review(where: $where, limit: $limit, offset: $offset) {\n    id: uuid\n    create_date\n    reviewer_id\n    reviewee_id\n    reference_id\n    reference_type\n    comments\n    rating\n  }\n}"
+            },
+            {
+              "name": "Update Review By Id",
+              "query": "mutation UpdateReviewById($id: uuid = \"\", $review: dctor_review_set_input = {}) {\n  review: update_dctor_review_by_pk(pk_columns: {uuid: $id}, _set: $review) {\n    uuid\n  }\n}"
+            },
+            {
+              "name": "List Treatments",
+              "query": "query MyQuery($where: treatment_bool_exp = {}, $limit: Int = null, $offset: Int = null) {\n  findTreatments(where: $where, limit: $limit, offset: $offset) {\n    category {\n        id: uuid\n        name\n    }\n    uuid\n    name\n    cpt_code\n  }\n}"
+            },
+            {
+              "name": "Complete Appointment",
+              "query": "mutation CompleteAppointment($id:uuid!) {\n  appointment: updateEventById(pk_columns: {uuid: $id}, _set: {status: \"completed\"}) {\n    condition\n    dtend\n    dtstart\n    notes\n    status\n  }\n}"
+            },
+            {
+              "name": "Cancel Appointment",
+              "query": "mutation CancelAppointment($id:uuid!) {\n  appointment: updateEventById(pk_columns: {uuid: $id}, _set: {status: \"cancelled\"}) {\n    condition\n    dtend\n    dtstart\n    notes\n    status\n  }\n}"
+            },
+            {
+              "name": "Update Appointment By Id",
+              "query": "mutation UpdateEventById($id: uuid!, $appointment: event_set_input) {\n  appointment: updateEventById(pk_columns: {uuid: $id}, _set: $appointment) {\n      uuid\n  }\n}"
+            },
+            {
+              "name": "View Appointment Details",
+              "query": "query ViewAppointmentDetails($id: uuid!) {\n  appointment: findEventById(uuid: $id) {\n    condition\n    clinic_id\n    dtstart\n    dtend\n    notes\n    status\n    referenced_reviews {\n      rating\n      comments\n    }\n  }\n}"
+            },
+            {
+              "name": "List Appointments",
+              "query": "query ListAppointmentsQuery($where: event_bool_exp = {}, $limit: Int = null, $offset: Int = null) {\n  appointments: findEvents(where: $where, offset: $offset, limit: $limit) {\n    doctor: attendees(where: {attendee: {tag: {_like: \"%role_doctor%\"}}}) {\n      attendee_id\n      status\n      id: uuid\n    }\n    patient: attendees(where: {attendee: {tag: {_like: \"%role_patient%\"}}}) {\n      attendee_id\n      status\n      id: uuid\n    }\n    condition\n    clinic_id\n    dtstamp\n    dtstart\n    dtend\n    notes\n    status\n    id: uuid\n    referenced_reviews {\n      rating\n      comments\n    }\n  }\n}"
+            },
+            {
+              "name": "List Insurance",
+              "query": "query ListInsuranceQuery($where: insurance_bool_exp = {}, $limit: Int = null, $offset: Int = null) {\n  insurance: findInsurance(where: $where, limit: $limit, offset: $offset) {\n    id: uuid\n    emirates\n    name\n  }\n}"
+            },
+            {
+              "name": "List Users",
+              "query": "query SearchQuery($where: user_bool_exp = {owner: {_eq: \"dctor\"}}, $limit: Int = null, $offset: Int = null) {\n  users: findUsers(limit: $limit, offset: $offset, where: $where) {\n    id\n    name\n  }\n}"
+            },
+            {
+              "name": "Book Appointment",
+              "query": "mutation createEvent($appointment: event_insert_input!) {\n  appointment: createEvent(object: $appointment) {\n    id: uuid\n    condition\n    dtend\n    dtstart\n    status\n    attendees {\n      attendee_id\n    }\n  }\n}"
+            },
+            {
+              "name": "Update User By Id",
+              "query": "mutation UpdateUserById($id: uuid, $user: user_set_input = {}, $new_insurance: [dctor_insurance_relation_insert_input!]! = [], $removed_insurance: [uuid!] = []) {\n  user: updateUser(where: {id: {_eq: $id}, owner: {_eq: \"dctor\"}}, _set: $user) {\n    returning {\n      id\n      first_name\n      last_name\n    }\n  }\n  added_insurance: insert_dctor_insurance_relation(objects: $new_insurance) {\n    returning {\n      insurance_id\n    }\n  }\n  removed_insurance: delete_dctor_insurance_relation(where: {owner_id: {_eq: $id}, owner_type: {_in: [\"admin\", \"clinic_admin\", \"doctor\", \"patient\"]}, insurance_id: {_in: $removed_insurance}}) {\n      returning {\n          insurance_id\n      }\n  }\n}"
+            },
+            {
+              "name": "List Facilities",
+              "query": "query dctor_facility($where: dctor_facility_bool_exp = {}, $limit: Int = null, $offset: Int = null) {\n  facilities: dctor_facility(where: $where, limit: $limit, offset: $offset) {\n    id: uuid\n    bio\n    email\n    name\n    phone\n  }\n}"
+            },
+            {
+              "name": "Reschedule Appointment",
+              "query": "mutation RescheduleAppointment($id:uuid!, $appointment: event_set_input) {\n  appointment: updateEventById(pk_columns: {uuid: $id}, _set: $appointment) {\n    condition\n    dtend\n    dtstart\n    notes\n    status\n  }\n}"
+            },
+            {
+              "name": "List User Photos",
+              "query": "query UserPhotosQuery($id: uuid!, $where: dctor_resource_bool_exp = {}, $limit: Int = null, $offset: Int = null) {\n  photos: dctor_resource(where: {_and: [{owner_id: {_eq: $id}, owner_type: {_in: [\"clinic_admin\", \"doctor\", \"patient\"]}}, $where]}, offset: $offset, limit: $limit) {\n    id: uuid\n    url\n  }\n  total: dctor_resource_aggregate(where: {_and: [{owner_id: {_eq: $id}, owner_type: {_in: [\"clinic_admin\", \"doctor\", \"patient\"]}}, $where]}) {\n    aggregate {\n      count\n    }\n  }\n}"
+            },
+            {
+              "name": "Search",
+              "query": "query SearchQuery($where: dctor_search_index_bool_exp = {}, $limit: Int = null, $offset: Int = null, $is_anonymous: Boolean = true) {\n  search_results: dctor_search_index(where: $where, limit: $limit, offset: $offset) {\n    source_id\n    source_type\n    name\n    addresses {\n      address_line\n      latitude\n      longitude\n    }\n    availability {\n      rule\n      time_start\n      time_end\n      weekday\n    }\n    insurance_list {\n      insurance {\n        id: uuid\n        name\n        emirates\n      }\n    }\n    treatments {\n      id: treatment_id\n      treatment {\n        name\n        cpt_code\n      }\n      currency\n      price\n    }\n    user {\n      phone @skip(if: $is_anonymous)\n      health_facilities: left_relationships(where: {relationship_type: {_eq: \"doctor_is_affiliated_to_clinic\"}}) {\n        facility: related_entity_as_facility {\n          id: uuid\n          name\n          attributes: search_index {\n            addresses {\n              address_line\n              latitude\n              longitude\n            }\n          }\n        }\n        availability {\n          weekday\n          time_start\n          time_end\n          rule\n        }\n        insurance_list {\n          insurance {\n            id: uuid\n            name\n            emirates\n          }\n        }\n        treatments {\n          id: treatment_id\n          treatment {\n            name\n            cpt_code\n          }\n          currency\n          price\n        }\n      }\n      reviews_received_stats: reviews_received_aggregate(where: {reviewee_type:{_in:[\"clinic_admin\", \"doctor\", \"patient\"]}}) {\n        aggregate {\n          count\n          avg {\n            rating\n          }\n        }\n      }\n    }\n    facility {\n      name\n      doctors: user_relationships(where: {relationship_type: {_eq: \"doctor_is_affiliated_to_clinic\"}}) {\n        doctor: left_user {\n          id\n          name\n        }\n      }\n      reviews_received_stats: reviews_received_aggregate(where: {reviewee_type:{_in:[\"clinic\"]}}) {\n        aggregate {\n          count\n          avg {\n            rating\n          }\n        }\n      }\n    }\n  }\n  total: dctor_search_index_aggregate(where: $where) {\n    aggregate {\n      count\n    }\n  }\n}"
+            },
+            {
+              "name": "Register Entity",
+              "query": "mutation RegisterEntityMutation($user: user_insert_input!, $permissions:  [iam_dctor_adapter_insert_input!]! = [], $password: IAMSetPassword! = {}) {\n  user: registerUser(object: $user) {\n        id\n        health_facilities: left_relationships(where: {relationship_type: {_in: [\"doctor_is_affiliated_to_clinic\", \"clinic_admin_manages_clinic\"]}}) {\n            facility: related_entity_as_facility {\n              id: uuid\n            }\n        }\n  }\n  permissions: insert_iam_dctor_adapter(objects: $permissions) {\n    affected_rows\n  }\n  password: iamSetPassword(data: $password) {\n    status\n  }\n}"
+            },
+            {
+              "name": "Get Facility Details By Id",
+              "query": "query dctor_facility_by_pk($id: uuid!) {\n  facility: dctor_facility_by_pk(uuid: $id) {\n    id: uuid\n    bio\n    email\n    name\n    phone\n    avatar\n    search_index {\n        addresses {\n        address_line\n        latitude\n        longitude\n      }\n      availability {\n        rule\n        time_start\n        time_end\n        weekday\n      }\n      insurance_list {\n        insurance {\n          id: uuid\n          name\n          emirates\n        }\n      }\n      treatments {\n        id: treatment_id\n        treatment {\n          name\n          cpt_code\n        }\n        currency\n        price\n      }\n    }\n    reviews_received_aggregate {\n      aggregate {\n        count\n        avg {\n          rating\n        }\n      }\n    }\n    photos {\n        url\n    }\n  }\n}"
+            },
+            {
+              "name": "List User Reviews",
+              "query": "query UserReviewsQuery($id: uuid!, $where: dctor_review_bool_exp = {}, $limit: Int = null, $offset: Int = null) {\n  reviews: dctor_review(limit: $limit, offset: $offset, where: {_and: [{reviewee_id: {_eq: $id}}, {reviewee_type: {_in: [\"clinic_admin\", \"doctor\", \"patient\"]}}, $where]}) {\n    id: uuid\n    reviewer_id\n    reviewee_id\n    create_date\n    rating\n    reference_id\n    reference_type\n    comments\n  }\n  total:dctor_review_aggregate(where: {_and: [{reviewee_id: {_eq: $id}}, {reviewee_type: {_in: [\"clinic_admin\", \"doctor\", \"patient\"]}}, $where]}) {\n    aggregate {\n      count\n    }\n  }\n}"
+            },
+            {
+              "name": "Get User Details By Id",
+              "query": "query GetUserByIdQuery($id: String!, $dtstart: timestamp = null, $dtend: timestamp = null) {\n  user: findUserById(username: $id, owner: \"dctor\") {\n    id\n    name\n    avatar\n    bio\n    first_name\n    last_name\n    birthday\n    gender\n    phone\n    email\n    properties\n    tag\n    health_facilities: left_relationships(where: {relationship_type: {_in:[ \"doctor_is_affiliated_to_clinic\", \"clinic_admin_manages_clinic\"]}}) {\n      facility: related_entity_as_facility {\n        id: uuid\n        name\n        attributes: search_index {\n          addresses {\n            address_line\n            latitude\n            longitude\n          }\n        }\n      }\n      availability {\n        weekday\n        time_start\n        time_end\n        rule\n      }\n      insurance_list {\n        insurance {\n          id: uuid\n          name\n          emirates\n        }\n      }\n      treatments {\n        id: treatment_id\n        treatment {\n          name\n          cpt_code\n        }\n        currency\n        price\n      }\n    }\n    insurance_list(where: {owner_type: {_in: [\"admin\", \"clinic_admin\", \"doctor\", \"patient\"]}}) {\n\t\t\tinsurance {\n        id: uuid\n        name\n      }\n    }\n  }\n  calendar: iam_user_calendar(args: {dtstart: $dtstart, dtend: $dtend, user_id: $id}) {\n    dtstart\n    dtend\n    is_available\n    clinic_id\n  }\n  reviews_received_count: reviews_received_count(args: {user_id: $id}) {\n    rating\n    count\n  }\n}"
+            },
+            {
+              "name": "List User Appointments",
+              "query": "query UserAppointmentsQuery($id: uuid!, $filter: event_bool_exp = {}, $limit: Int = null, $offset: Int = null, $order_by: [event_order_by!] = {}) {\n  appointments: findEvents(limit: $limit, offset: $offset, where: {_and: [{attendees: {attendee_id: {_eq: $id}}}, $filter]}, order_by: $order_by) {\n    id: uuid\n    dtstart\n    dtend\n    notes\n    status\n    condition\n    clinic_id\n    attendees {\n      id: uuid\n      status\n      attendee_id\n    }\n    doctor: attendees(where: {attendee: {tag: {_like: \"%role_doctor%\"}}}) {\n      attendee_id\n      status\n      id: uuid\n    }\n    patient: attendees(where: {attendee: {tag: {_like: \"%role_patient%\"}}}) {\n      attendee_id\n      status\n      id: uuid\n    }\n    referenced_reviews {\n      rating\n      comments\n    }\n  }\n  total: event_aggregate(where: {_and: [{attendees: {attendee_id: {_eq: $id}}}, $filter]}) {\n    aggregate {\n      count\n    }\n  }\n}"
+            },
+            {
+              "name": "List Treatment Categories",
+              "query": "query ListTreatmentCategoriesQuery($where: dctor_treatment_category_bool_exp = {}, $limit: Int = null, $offset: Int = null, , $sub_limit: Int = null, $sub_offset: Int = null) {\n  treatment_categories: dctor_treatment_category(where: {_and: [{parent_id: {_is_null: true}}, $where]}, limit: $limit, offset: $offset) {\n    id: uuid\n    name\n    description\n    icon_url\n    parent {\n      id: uuid\n      name\n    }\n    sub_categories(limit: $sub_limit, offset: $sub_offset) {\n      id: uuid\n      name\n      description\n      icon_url\n      attributes\n    }\n  }\n}"
+            },
+            {
+              "name": "List User Links",
+              "query": "query ListIamUserLinksQuery($id: uuid, $where: iam_user_link_bool_exp = {}, $limit: Int = null, $offset: Int = null) {\n  links: iam_user_link(where: {_and: [{owner_id: {_eq: $id}}, $where]}, limit: $limit, offset: $offset) {\n    id: uuid\n    reference_id\n    reference_type\n  }\n}"
+            },
+            {
+              "name": "Add IAM User Link",
+              "query": "mutation AddIamUserLink($link: iam_user_link_insert_input!) {\n  link: insert_iam_user_link_one(object: $link) {\n    id: uuid\n  }\n}"
+            },
+            {
+              "name": "Delete IAM User Link",
+              "query": "mutation DeleteIAMUserLink($id: uuid = null, $where: iam_user_link_bool_exp!) {\n  link: delete_iam_user_link(where: {_and: [{owner_id: {_eq: $id}}, $where]}) {\n    returning {\n      id: uuid\n    }\n  }\n}"
+            }
+          ]
+        }
+      }
+    ],
+    "allowlist": [
+      {
+        "collection": "allowed-queries",
+        "scope": {
+          "global": true
+        }
+      }
+    ],
+    "actions": [
+      {
+        "name": "iamSetPassword",
+        "definition": {
+          "handler": "{{DCTOR_API_IAM_SCHEME}}://{{DCTOR_API_IAM_HOST}}:{{DCTOR_API_IAM_PORT}}/api/set-password",
+          "output_type": "IAMDefaultResponse",
+          "headers": [
+            {
+              "name": "Authorization",
+              "value_from_env": "DCTOR_API_OIDC_CLIENT_AUTHORIZATION"
+            }
+          ],
+          "arguments": [
+            {
+              "name": "data",
+              "type": "IAMSetPassword!"
+            }
+          ],
+          "request_transform": {
+            "body": {
+              "action": "x_www_form_urlencoded",
+              "form_template": {
+                "newPassword": "{{$body.input.data.newPassword}}",
+                "oldPassword": "{{$body.input.data.oldPassword}}",
+                "userName": "{{$body.input.data.userName}}",
+                "userOwner": "dctor"
+              }
+            },
+            "method": "POST",
+            "query_params": {},
+            "request_headers": {
+              "add_headers": {
+                "content-type": "application/x-www-form-urlencoded"
+              },
+              "remove_headers": [
+                "content-type"
+              ]
+            },
+            "template_engine": "Kriti",
+            "version": 2
+          },
+          "type": "mutation",
+          "kind": "synchronous"
+        },
+        "permissions": [
+          {
+            "role": "dctor/role_service_account"
+          }
+        ]
+      },
+      {
+        "name": "iamSignUp",
+        "definition": {
+          "handler": "{{DCTOR_API_IAM_SCHEME}}://{{DCTOR_API_IAM_HOST}}:{{DCTOR_API_IAM_PORT}}/api/signup",
+          "output_type": "IAMDefaultResponse",
+          "headers": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "arguments": [
+            {
+              "name": "data",
+              "type": "IAMSignUpRequest!"
+            }
+          ],
+          "request_transform": {
+            "body": {
+              "action": "transform",
+              "template": "{\n    \"application\": \"dctor-app\",\n    \"organization\": \"dctor\",\n    \"email\": {{$body.input.data.email}},\n    \"password\": {{$body.input.data.password}},\n    \"firstName\": {{$body.input.data.firstName}},\n    \"lastName\": {{$body.input.data.lastName}}\n}"
+            },
+            "template_engine": "Kriti",
+            "version": 2
+          },
+          "type": "mutation",
+          "kind": "synchronous"
+        },
+        "permissions": [
+          {
+            "role": "dctor/role_clinic_admin"
+          },
+          {
+            "role": "dctor/role_anonymous"
+          }
+        ]
+      },
+      {
+        "name": "sendVerificationCode",
+        "definition": {
+          "handler": "http://iam:8000/api/send-verification-code",
+          "output_type": "SendVerificationCodeResponse",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/x-www-form-urlencoded"
+            }
+          ],
+          "arguments": [
+            {
+              "name": "request",
+              "type": "SendVerificationCodeRequest!"
+            }
+          ],
+          "request_transform": {
+            "body": {
+              "action": "x_www_form_urlencoded",
+              "form_template": {
+                "applicationId": "admin/dctor-app",
+                "captchaType": "none",
+                "dest": "{{$body.input.request.dest}}",
+                "method": "{{$body.input.request.method}}",
+                "type": "email"
+              }
+            },
+            "method": "POST",
+            "query_params": {},
+            "request_headers": {
+              "add_headers": {
+                "content-type": "application/x-www-form-urlencoded"
+              },
+              "remove_headers": [
+                "content-type"
+              ]
+            },
+            "template_engine": "Kriti",
+            "version": 2
+          },
+          "type": "mutation",
+          "kind": "synchronous"
+        },
+        "comment": "sendVerificationCode",
+        "permissions": [
+          {
+            "role": "dctor/role_doctor"
+          },
+          {
+            "role": "dctor/role_patient"
+          },
+          {
+            "role": "dctor/role_anonymous"
+          }
+        ]
+      }
+    ],
+    "custom_types": {
+      "input_objects": [
+        {
+          "name": "SendVerificationCodeRequest",
+          "fields": [
+            {
+              "name": "dest",
+              "type": "String!"
+            },
+            {
+              "name": "method",
+              "type": "String!"
+            }
+          ]
+        },
+        {
+          "name": "IAMSignUpRequest",
+          "fields": [
+            {
+              "name": "password",
+              "type": "String"
+            },
+            {
+              "name": "firstName",
+              "type": "String"
+            },
+            {
+              "name": "lastName",
+              "type": "String"
+            },
+            {
+              "name": "email",
+              "type": "String"
+            }
+          ]
+        },
+        {
+          "name": "IAMSetPasssword",
+          "fields": [
+            {
+              "name": "userName",
+              "type": "String"
+            },
+            {
+              "name": "oldPassword",
+              "type": "String"
+            },
+            {
+              "name": "newPassword",
+              "type": "String"
+            }
+          ]
+        },
+        {
+          "name": "IAMSetPassword",
+          "fields": [
+            {
+              "name": "userName",
+              "type": "String"
+            },
+            {
+              "name": "oldPassword",
+              "type": "String"
+            },
+            {
+              "name": "newPassword",
+              "type": "String"
+            }
+          ]
+        }
+      ],
+      "objects": [
+        {
+          "name": "SendVerificationCodeResponse",
+          "fields": [
+            {
+              "name": "status",
+              "type": "String"
+            },
+            {
+              "name": "msg",
+              "type": "String"
+            },
+            {
+              "name": "sub",
+              "type": "String"
+            },
+            {
+              "name": "name",
+              "type": "String"
+            },
+            {
+              "name": "data",
+              "type": "String"
+            },
+            {
+              "name": "data2",
+              "type": "String"
+            }
+          ]
+        },
+        {
+          "name": "IAMDefaultResponse",
+          "fields": [
+            {
+              "name": "status",
+              "type": "String"
+            },
+            {
+              "name": "msg",
+              "type": "String"
+            },
+            {
+              "name": "sub",
+              "type": "String"
+            },
+            {
+              "name": "name",
+              "type": "String"
+            },
+            {
+              "name": "data",
+              "type": "String"
+            },
+            {
+              "name": "data2",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    "rest_endpoints": [
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "List Appointments"
+          }
+        },
+        "methods": [
+          "GET"
+        ],
+        "name": "List Appointments",
+        "url": "appointments"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "Book Appointment"
+          }
+        },
+        "methods": [
+          "POST"
+        ],
+        "name": "Book Appointment",
+        "url": "appointments"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "Update Appointment By Id"
+          }
+        },
+        "methods": [
+          "PATCH"
+        ],
+        "name": "Update Appointment By Id",
+        "url": "appointments/:id"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "View Appointment Details"
+          }
+        },
+        "methods": [
+          "GET"
+        ],
+        "name": "View Appointment Details",
+        "url": "appointments/:id"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "Cancel Appointment"
+          }
+        },
+        "methods": [
+          "PATCH"
+        ],
+        "name": "Cancel Appointment",
+        "url": "appointments/:id/cancel"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "Complete Appointment"
+          }
+        },
+        "methods": [
+          "PATCH"
+        ],
+        "name": "Complete Appointment",
+        "url": "appointments/:id/complete"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "Reschedule Appointment"
+          }
+        },
+        "methods": [
+          "PATCH"
+        ],
+        "name": "Reschedule Appointment",
+        "url": "appointments/:id/reschedule"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "List Facilities"
+          }
+        },
+        "methods": [
+          "GET"
+        ],
+        "name": "List Facilities",
+        "url": "facilities"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "Get Facility Details By Id"
+          }
+        },
+        "methods": [
+          "GET"
+        ],
+        "name": "Get Facility Details By Id",
+        "url": "facilities/:id"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "List Insurance"
+          }
+        },
+        "methods": [
+          "GET"
+        ],
+        "name": "List Insurance",
+        "url": "insurance"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "Register Entity"
+          }
+        },
+        "methods": [
+          "POST"
+        ],
+        "name": "Register Entity",
+        "url": "register"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "Add Review"
+          }
+        },
+        "methods": [
+          "POST"
+        ],
+        "name": "Add Review",
+        "url": "reviews"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "List Reviews"
+          }
+        },
+        "methods": [
+          "GET"
+        ],
+        "name": "List Reviews",
+        "url": "reviews"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "Update Review By Id"
+          }
+        },
+        "methods": [
+          "PATCH"
+        ],
+        "name": "Update Review By Id",
+        "url": "reviews/:id"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "Search"
+          }
+        },
+        "methods": [
+          "GET"
+        ],
+        "name": "Search",
+        "url": "search"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "List Treatments"
+          }
+        },
+        "methods": [
+          "GET"
+        ],
+        "name": "List Treatments",
+        "url": "treatments"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "List Treatment Categories"
+          }
+        },
+        "methods": [
+          "GET"
+        ],
+        "name": "List Treatment Categories",
+        "url": "treatments/categories"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "List Users"
+          }
+        },
+        "methods": [
+          "GET"
+        ],
+        "name": "List Users",
+        "url": "users"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "Update User By Id"
+          }
+        },
+        "methods": [
+          "PATCH"
+        ],
+        "name": "Update User By Id",
+        "url": "users/:id"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "Get User Details By Id"
+          }
+        },
+        "methods": [
+          "GET"
+        ],
+        "name": "Get User Details By Id",
+        "url": "users/:id"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "List User Appointments"
+          }
+        },
+        "methods": [
+          "GET"
+        ],
+        "name": "List User Appointments",
+        "url": "users/:id/appointments"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "List User Links"
+          }
+        },
+        "methods": [
+          "GET"
+        ],
+        "name": "List User Links",
+        "url": "users/:id/links"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "Add IAM User Link"
+          }
+        },
+        "methods": [
+          "POST"
+        ],
+        "name": "Add IAM User Link",
+        "url": "users/links"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "Delete IAM User Link"
+          }
+        },
+        "methods": [
+          "DELETE"
+        ],
+        "name": "Delete IAM User Link",
+        "url": "users/:id/links"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "List User Photos"
+          }
+        },
+        "methods": [
+          "GET"
+        ],
+        "name": "List User Photos",
+        "url": "users/:id/photos"
+      },
+      {
+        "comment": "",
+        "definition": {
+          "query": {
+            "collection_name": "allowed-queries",
+            "query_name": "List User Reviews"
+          }
+        },
+        "methods": [
+          "GET"
+        ],
+        "name": "List User Reviews",
+        "url": "users/:id/reviews"
+      }
+    ],
+    "backend_configs": {
+      "dataconnector": {
+        "athena": {
+          "uri": "https://qgep6ilkokpghmers3a54fjuku0rumke.lambda-url.us-east-1.on.aws/api/v1/athena"
+        },
+        "mariadb": {
+          "uri": "https://qgep6ilkokpghmers3a54fjuku0rumke.lambda-url.us-east-1.on.aws/api/v1/mariadb"
+        },
+        "mysql8": {
+          "uri": "https://qgep6ilkokpghmers3a54fjuku0rumke.lambda-url.us-east-1.on.aws/api/v1/mysql"
+        },
+        "oracle": {
+          "uri": "https://qgep6ilkokpghmers3a54fjuku0rumke.lambda-url.us-east-1.on.aws/api/v1/oracle"
+        },
+        "snowflake": {
+          "uri": "https://qgep6ilkokpghmers3a54fjuku0rumke.lambda-url.us-east-1.on.aws/api/v1/snowflake"
+        }
+      }
+    }
+  }
+}

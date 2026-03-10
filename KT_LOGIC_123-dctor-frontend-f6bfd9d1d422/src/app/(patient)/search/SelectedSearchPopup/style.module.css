@@ -1,0 +1,21 @@
+.container {
+    padding: 1rem;
+    width: 400px;
+}
+
+.container hr {
+    width: calc(100% + 2rem);
+    margin-left: -1rem;
+}
+
+.actions-container > * {
+    margin-right: 0.5rem;
+}
+
+.actions-container > *:last-child {
+    margin-right: 0;
+}
+
+.field-container {
+    margin-top: 1rem;
+}

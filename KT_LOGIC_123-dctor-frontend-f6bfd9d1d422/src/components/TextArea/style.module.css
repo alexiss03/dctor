@@ -1,0 +1,29 @@
+.input {
+    padding: 1rem !important;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    min-width: 350px;
+    box-shadow: 0 0 8px 0 rgba(0,0,0,0.05);
+    font-size: 0.8rem;
+    line-height: 1rem;
+    font-family: inherit;
+    width: 100%;
+    resize: none;
+    min-height: 200px;
+    margin-bottom: 1rem;
+}
+
+.input:last-child {
+    margin-bottom: 0;
+}
+
+
+.input:focus {
+    border-color: #838383
+}
+
+.input::placeholder {
+    color: #9F9F9F;
+}
+

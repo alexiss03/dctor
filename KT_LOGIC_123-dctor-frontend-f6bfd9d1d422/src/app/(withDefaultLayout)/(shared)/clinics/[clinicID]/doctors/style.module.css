@@ -1,0 +1,10 @@
+.container {
+    padding: 2rem;
+    max-width: 1024px;
+    margin: auto;
+}
+
+.search-container {
+    width: 450px;
+    margin-bottom: 1rem;
+}

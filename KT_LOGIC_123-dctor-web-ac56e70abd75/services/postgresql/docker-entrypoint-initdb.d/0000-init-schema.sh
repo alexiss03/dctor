@@ -1,0 +1,18 @@
+#!/bin/bash
+set -e
+
+echo "rdb:5432:*:${POSTGRES_USER}:${POSTGRES_PASSWORD}" >> ~/.pgpass
+
+psql -v ON_ERROR_STOP=1 --username "${POSTGRES_USER}"  --dbname "${POSTGRES_DB}" <<-EOSQL
+	CREATE SCHEMA IF NOT EXISTS apigateway
+                AUTHORIZATION ${POSTGRES_USER};
+	CREATE SCHEMA IF NOT EXISTS caldav
+                AUTHORIZATION ${POSTGRES_USER};
+	CREATE SCHEMA IF NOT EXISTS dctor
+                AUTHORIZATION ${POSTGRES_USER};
+	CREATE SCHEMA IF NOT EXISTS iam
+                AUTHORIZATION ${POSTGRES_USER};
+  CREATE EXTENSION postgis SCHEMA "public";
+  CREATE EXTENSION tablefunc SCHEMA "public";
+  CREATE EXTENSION "uuid-ossp" SCHEMA "public";
+EOSQL

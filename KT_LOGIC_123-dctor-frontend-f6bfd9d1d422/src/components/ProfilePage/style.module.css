@@ -1,0 +1,53 @@
+.wrapper {
+    font-size: 1.25rem;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.doctor-info-container {
+    padding: 2rem;
+    display: flex;
+    margin-bottom: 2rem;
+}
+
+.doctor-info-container :global(.user-avatar) {
+    width: 300px;
+    height: 300px;
+}
+
+.actions-container > * {
+    margin-right: 1em;
+    margin-bottom: 1em;
+}
+
+.info-boxes-container {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 16px;
+    grid-row-gap: 0px;
+}
+
+.info-two-column {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 16px;
+    grid-row-gap: 0px;
+}
+
+.sublabel-container {
+    margin: 0.25em 0;
+}
+
+.sublabel-container:first-child {
+    margin-top: 0;
+}
+
+.photo-previews-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    grid-column-gap: 2rem;
+    grid-row-gap: 2rem;
+}

@@ -1,0 +1,16 @@
+.checkbox-container {
+    display: flex;
+}
+
+.checkbox-container > input {
+    margin-right: 1rem;
+}
+
+.checkbox-container > p {
+    text-align: left;
+}
+
+.resend-otp-text {
+    color: #808080;
+    margin-bottom: 3rem;
+}

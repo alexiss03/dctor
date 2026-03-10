@@ -1,0 +1,18 @@
+.wrapper {
+    display: flex;
+    min-height: 100vh;
+    height: 100%;
+    position: relative;
+    align-items: stretch;
+}
+
+.map-container {
+    position: relative;
+    flex: 6
+}
+
+.map-overlay-container {
+    position: absolute;
+    padding: 2rem 1rem;
+    top: 0;
+}

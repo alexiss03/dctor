@@ -1,0 +1,8 @@
+.status {
+    display: flex;
+    align-items: center;
+}
+
+.status svg {
+    margin-right: 0.5rem;
+}

@@ -1,0 +1,16 @@
+.logo-container {
+    margin-bottom: 6rem;
+}
+
+.logo {
+    margin: auto;   
+    display: block;
+}
+
+.recovery-container {
+    font-size: 0.875rem;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 4rem;
+}
+

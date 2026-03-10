@@ -1,0 +1,17 @@
+{
+  "name": "zocdoc-web",
+  "version": "0.0.1",
+  "description": "Zocdoc Web",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Zocdoc"
+  ],
+  "author": "Lambert Honrade <lbhonrade.6@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "kong-pdk": "^0.5.5"
+  }
+}

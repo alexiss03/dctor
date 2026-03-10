@@ -1,0 +1,238 @@
+{
+    "organizations": [
+        {
+            "owner": "admin",
+            "name": "dctor",
+            "displayName": "Dctor",
+            "websiteUrl": "",
+            "favicon": "",
+            "passwordType": "argon2id",
+            "passwordSalt": "123456",
+            "countryCodes": [
+                "US"
+            ],
+            "defaultAvatar": "https://cdn.casbin.org/img/casbin.svg",
+            "defaultApplication": "",
+            "tags": [],
+            "languages": [
+                "en"
+            ],
+            "masterPassword": "",
+            "initScore": 2000,
+            "enableSoftDeletion": true,
+            "isProfilePublic": true,
+            "accountItems": [
+                {
+                    "name": "ID",
+                    "visible": true,
+                    "viewRule": "Public",
+                    "modifyRule": "Immutable"
+                },
+                {
+                    "name": "Name",
+                    "visible": true,
+                    "viewRule": "Public",
+                    "modifyRule": "Admin"
+                },
+                {
+                    "name": "Display name",
+                    "visible": true,
+                    "viewRule": "Public",
+                    "modifyRule": "Self"
+                },
+                {
+                    "name": "Email",
+                    "visible": true,
+                    "viewRule": "Public",
+                    "modifyRule": "Self"
+                },
+                {
+                    "name": "Properties",
+                    "visible": false,
+                    "viewRule": "Public",
+                    "modifyRule": "Self"
+                },
+                {
+                    "name": "Is admin",
+                    "visible": true,
+                    "viewRule": "Public",
+                    "modifyRule": "Self"
+                },
+                {
+                    "name": "Roles",
+                    "visible": true,
+                    "viewRule": "Public",
+                    "modifyRule": "Admin"
+                }
+            ]
+        }
+    ],
+    "applications": [
+        {
+            "owner": "admin",
+            "name": "dctor-app",
+            "displayName": "Dctor Application",
+            "logo": "",
+            "homepageUrl": "",
+            "organization": "dctor",
+            "cert": "",
+            "enablePassword": true,
+            "enableSignUp": true,
+            "providers": [],
+            "signupItems": [
+                {
+                    "name": "ID",
+                    "visible": false,
+                    "required": true,
+                    "prompted": false,
+                    "rule": "Random"
+                },
+                {
+                    "name": "Display name",
+                    "visible": true,
+                    "required": true,
+                    "prompted": false,
+                    "rule": "First, last"
+                },
+                {
+                    "name": "Email",
+                    "visible": true,
+                    "required": true,
+                    "prompted": false,
+                    "rule": "None"
+                },
+                {
+                    "name": "Agreement",
+                    "visible": true,
+                    "required": true,
+                    "prompted": false,
+                    "rule": "None"
+                }
+            ],
+            "redirectUris": [
+                "http://iam:8000/",
+                "https://dctor-54-160-91-39.sslip.io/"
+            ],
+            "expireInHours": 168
+        }
+    ],
+    "users": [],
+    "providers": [
+        {
+            "owner": "dctor",
+            "name": "dctor-email",
+            "displayName": "Dctor Admin",
+            "category": "Email",
+            "type": "SUBMAIL",
+            "method": "Normal",
+            "clientId": "${EMAIL_SENDER}",
+            "clientSecret": "${EMAIL_SMTP_PASSWORD}",
+            "host": "email-smtp.us-east-1.amazonaws.com",
+            "port": 465,
+            "disableSsl": false,
+            "title": "Your Dctor Verification Code",
+            "content": "You have requested a verification code at Dctor. Here is your code: %s, please enter in 5 minutes.",
+            "receiver": "lbhonrade.6+ktlogic@gmail.com",
+            "appId": "${EMAIL_SMTP_USERNAME}"
+        },
+        {
+            "owner": "dctor",
+            "name": "dctor-s3",
+            "displayName": "S3-User Photos",
+            "category": "Storage",
+            "type": "AWS S3",
+            "method": "Normal",
+            "clientId": "${}",
+            "clientSecret": "${}",
+            "disableSsl": false,
+            "regionId": "us-east-1",
+            "endpoint": "s3.us-east-1.amazonaws.com",
+            "domain": "http://localhost:64689",
+            "bucket": "zocdoc",
+            "pathPrefix": "/users/photos/",
+            "enableSignAuthnRequest": false,
+            "providerUrl": ""
+        }
+    ],
+    "certs": [],
+    "ldaps": [],
+    "models": [
+        {
+            "owner": "dctor",
+            "name": "model_rbac",
+            "displayName": "Role-based access control",
+            "modelText": "[request_definition]\nr = sub, obj, act, perm\n\n[policy_definition]\np = sub, obj, act\n\n[role_definition]\ng = _, _\n\n[policy_effect]\ne = some(where (p.eft == allow))\n\n[matchers]\nm = g(r.sub, p.sub) && r.obj == p.obj && r.act == p.act",
+            "isEnabled": true
+        }
+    ],
+    "permissions": [
+        {
+            "owner": "dctor",
+            "name": "permission_rbac",
+            "createdTime": "2023-03-11T16:38:15+08:00",
+            "displayName": "Permission - RBAC",
+            "users": [],
+            "roles": [
+                "dctor/role_doctor"
+            ],
+            "domains": [],
+            "model": "model_rbac",
+            "adapter": "adapter_rbac",
+            "resourceType": "Application",
+            "resources": [
+                "dctor-app",
+                "self/calendar"
+            ],
+            "actions": [
+                "Read",
+                "Write"
+            ],
+            "effect": "Allow",
+            "isEnabled": true,
+            "submitter": "admin",
+            "approver": "admin",
+            "approveTime": "2023-03-11T16:39:02+08:00",
+            "state": "Approved"
+        }
+    ],
+    "payments": [],
+    "products": [],
+    "resources": [],
+    "roles": [
+        {
+            "displayName": "Doctor",
+            "isEnabled": true,
+            "name": "role_doctor",
+            "owner": "dctor",
+            "roles": [],
+            "users": []
+        },
+        {
+            "displayName": "Patient",
+            "isEnabled": true,
+            "name": "role_patient",
+            "owner": "dctor",
+            "roles": [],
+            "users": []
+        },
+        {
+            "displayName": "Administrator",
+            "isEnabled": true,
+            "name": "role_admin",
+            "owner": "dctor",
+            "roles": [],
+            "users": []
+        },
+        {
+            "displayName": "Clinic",
+            "isEnabled": true,
+            "name": "role_clinic",
+            "owner": "dctor",
+            "roles": [],
+            "users": []
+        }
+    ],
+    "syncers": [],
+    "tokens": [],
+    "webhooks": []
+}

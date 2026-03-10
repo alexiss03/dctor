@@ -1,0 +1,22 @@
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.background-wrapper {
+    flex-grow: 1;
+    width: 100%;
+    background: url('/background.png');
+    background-position: top 0px right 0px;
+    background-repeat: no-repeat;
+}
+
+.main-container {
+    width: 100%;
+    max-width: 1920px;
+    padding: 2rem;
+    margin: 0 auto;
+    flex-grow: 1;
+}

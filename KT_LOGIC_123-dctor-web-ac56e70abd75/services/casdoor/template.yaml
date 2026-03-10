@@ -1,0 +1,40 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Casdoor Serverless
+Globals:
+  Function:
+    Timeout: 60
+
+Resources:
+  CasdoorWebAPIFn:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: services/casdoor/
+      PackageType: Image
+      MemorySize: 256
+      PackageType: Image
+      ImageUri: doctr-web-iam-serverless:latest
+      # ImageUri: 188076460438.dkr.ecr.us-east-1.amazonaws.com/dctoriamservice0094b2dc/casdoorwebapifnb20228acrepo:doctr-web-iam-serverless-700c6197c3c5-latest
+      Environment:
+        Variables: 
+          PORT: '8000'
+          READINESS_CHECK_PATH: '/.well-known/openid-configuration'
+          PGSQL_USER: 'doctrplatform'
+          PGSQL_PASSWORD: 'd0ctr123456$$!'
+          PGSQL_DB: dctordb
+          dataSourceName: 'sslmode=require user=doctrplatform password=d0ctr123456$$! host=dctor-dev-pgdb.cvk1ehc8pruz.us-east-1.rds.amazonaws.com port=5432 dbname=dctordb search_path=public'
+          # dataSourceName: 'sslmode=disable user=doctrplatform password=d0ctr123456$$! host=rdb port=5432 dbname=doctrdb search_path=public'
+      Architectures:
+        - x86_64
+      AutoPublishAlias: live
+      FunctionUrlConfig:
+        AuthType: NONE
+      # Events:
+      #   APIEvent:
+      #     Type: HttpApi
+    Metadata:
+      DockerTag: serverless-latest
+      DockerContext: ./
+      Dockerfile: services/casdoor/Dockerfile
+      SamResourceId: CasdoorWebAPIFn

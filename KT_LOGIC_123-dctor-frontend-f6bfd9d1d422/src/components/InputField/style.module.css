@@ -1,0 +1,21 @@
+.container {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    margin-bottom: 1rem;
+}
+
+.container:last-child {
+    margin-bottom: 0;
+}
+
+
+.label-container {
+    display: flex;
+    align-items: center;
+    color: rgba(0,0,0,0.5);
+    font-weight: 500;
+    margin-right: 0.5rem;
+}

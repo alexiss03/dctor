@@ -1,0 +1,674 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Metadata:
+  'AWS::CloudFormation::Interface':
+    ParameterGroups:
+      - Label:
+          default: General
+        Parameters:
+          - ProjectId
+          - ProjectTag
+          - Environment
+      - Label:
+          default: Persistence Resources
+        Parameters:
+          - RDSDBUser
+          - RDSDBPassword
+          - RDSDBInstanceClass
+          - RDSIsMultiAZ
+          - RDSDBAllocatedStorage
+          - RDSDBMaxAllocatedStorage
+
+Parameters:
+  ProjectId:
+    Description: Project ID used to associate new resources to team members.
+    Type: String
+    Default: dctor
+    AllowedPattern: '^[a-z]([a-z0-9-])+$'
+    ConstraintDescription: >-
+      Project IDs must be between 2 and 15 characters, begin with a letter, and
+      only contain lowercase letters, numbers, and hyphens (-).
+    MinLength: 5
+    MaxLength: 15
+  ProjectTag:
+    Description: Project tag used to associate resources.
+    Type: String
+    Default: Dctor
+    ConstraintDescription: >-
+      Project tag must be between 5 and 128 characters
+    MinLength: 5
+    MaxLength: 128  
+  Environment:
+    Description: Environment
+    Type: String
+    Default: Development
+    AllowedValues:
+      - Development
+      - Staging
+      - Production
+    ConstraintDescription: Must be a valid environment.
+
+  # Persistence resources
+  RDSDBUser:
+    Description: The database admin account username
+    Type: String
+    Default: pgsqlprdadmin
+    AllowedPattern: '[a-zA-Z][a-zA-Z0-9-]*'
+    ConstraintDescription: must begin with a letter and contain only alphanumeric characters or dashes.
+    MinLength: 1
+    MaxLength: 16
+  RDSDBPassword:
+    Description: The database admin account password
+    Type: String
+    NoEcho: true
+    MinLength: 8
+    MaxLength: 41
+  RDSDBInstanceClass:
+    Description: The database instance type
+    Type: String
+    Default: db.t3.micro
+    ConstraintDescription: must select a valid database instance type.
+  RDSIsMultiAZ:
+    Description: Multi-AZ application database
+    Type: String
+    Default: false
+    ConstraintDescription: must be true or false.
+    AllowedValues:
+      - 'true'
+      - 'false'
+  RDSDBAllocatedStorage:
+    Description: The size of the database (Gb)
+    Type: Number
+    Default: 8
+    ConstraintDescription: must be between 20 and 1024Gb
+    MinValue: 8
+    MaxValue: 1024
+  RDSDBMaxAllocatedStorage:
+    Description: The maximum size of the database (Gb)
+    Type: Number
+    Default: 21
+    ConstraintDescription: must be between 21 and 1024Gb
+    MinValue: 10
+    MaxValue: 1024
+
+Mappings:
+  CidrBlock:
+    VPC:
+      Value: 10.16.0.0/16 # 65,536 IPs / 10.16.0.0-10.16.255.255
+    PublicA:
+      Value: 10.16.0.0/24 # 256 IPs / 10.16.0.0-10.16.0.255
+    PublicB:
+      Value: 10.16.1.0/24 # 256 IPs / 10.16.1.0-10.16.1.255
+    PublicC:
+      Value: 10.16.2.0/24 # 256 IPs / 10.16.2.0-10.16.2.255
+    SvcA:
+      Value: 10.16.4.0/22 # 1,024 IPs / 10.16.4.0-10.16.7.255
+    SvcB:
+      Value: 10.16.8.0/22 # 1,024 IPs / 10.16.8.0-10.16.11.255
+    SvcC:
+      Value: 10.16.12.0/22 # 1,024 IPs / 10.16.12.0-10.16.15.255
+    DBA:
+      Value: 10.16.16.0/24 # 256 IPs / 10.16.16.0-10.16.16.255
+    DBB:
+      Value: 10.16.17.0/24 # 256 IPs / 10.16.17.0-10.16.17.255
+    DBC:
+      Value: 10.16.18.0/24 # 256 IPs / 10.16.18.0-10.16.18.255
+  EnvAbbr:
+    Development:
+      Value: "dev"
+    Staging:
+      Value: "stg"
+    Production:
+      Value: "prd"
+
+Resources:
+
+  ########################################################################
+  # IAM
+  ########################################################################
+  IAMUDctorSvc:
+    Type: AWS::IAM::User
+    Properties:
+      UserName: !Sub '${AWS::StackName}-svc-user'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+        - arn:aws:iam::aws:policy/AWSCloudFormationFullAccess
+        - arn:aws:iam::aws:policy/AWSLambda_FullAccess
+      Tags:
+        - Key: Name
+          Value:
+            'Fn::Sub': "${AWS::StackName}-DctorSvcUser" 
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Project
+          Value: !Ref 'ProjectTag'
+
+  IAMAKDctorSvc:
+    Type: AWS::IAM::AccessKey
+    Properties:
+      UserName: !Ref IAMUDctorSvc
+
+  ########################################################################
+  # EC2
+  ########################################################################
+
+  EC2Vpc:
+    Type: 'AWS::EC2::VPC'
+    Properties:
+      CidrBlock: !FindInMap
+        - CidrBlock
+        - VPC
+        - Value
+      InstanceTenancy: default
+      EnableDnsSupport: 'true'
+      EnableDnsHostnames: 'true'
+      Tags:
+        - Key: Name
+          Value:
+            'Fn::Sub': "${AWS::StackName}-VPC" 
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Project
+          Value: !Ref 'ProjectTag'
+  EC2SubnetPublicA:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      AvailabilityZone:
+        'Fn::Sub': "${AWS::Region}a"
+      CidrBlock: !FindInMap
+        - CidrBlock
+        - PublicA
+        - Value
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value:
+            'Fn::Sub': "${AWS::StackName}-Public-A"
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Project
+          Value: !Ref 'ProjectTag'
+      VpcId: !Ref EC2Vpc
+    DependsOn:
+      - EC2Vpc
+  EC2SubnetPublicB:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      AvailabilityZone:
+        'Fn::Sub': "${AWS::Region}b"
+      CidrBlock: !FindInMap
+        - CidrBlock
+        - PublicB
+        - Value
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value:
+            'Fn::Sub': "${AWS::StackName}-Public-B"
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Project
+          Value: !Ref 'ProjectTag'
+      VpcId: !Ref EC2Vpc
+    DependsOn:
+      - EC2Vpc
+  EC2SubnetPublicC:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      AvailabilityZone:
+        'Fn::Sub': "${AWS::Region}c"
+      CidrBlock: !FindInMap
+        - CidrBlock
+        - PublicC
+        - Value
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value:
+            'Fn::Sub': "${AWS::StackName}-Public-C"
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Project
+          Value: !Ref 'ProjectTag'
+      VpcId: !Ref EC2Vpc
+    DependsOn:
+      - EC2Vpc
+  EC2SubnetSvcA:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      AvailabilityZone: !Join 
+        - ''
+        - - !Ref 'AWS::Region'
+          - a
+      CidrBlock: !FindInMap
+        - CidrBlock
+        - SvcA
+        - Value
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: !Join 
+            - '-'
+            - - !Ref 'AWS::StackName'
+              - Svc-A
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Project
+          Value: !Ref 'ProjectTag'
+      VpcId: !Ref EC2Vpc
+    DependsOn:
+      - EC2Vpc
+  EC2SubnetSvcB:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      AvailabilityZone: !Join 
+        - ''
+        - - !Ref 'AWS::Region'
+          - b
+      CidrBlock: !FindInMap
+        - CidrBlock
+        - SvcB
+        - Value
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: !Join 
+            - '-'
+            - - !Ref 'AWS::StackName'
+              - Svc-B
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Project
+          Value: !Ref 'ProjectTag'
+      VpcId: !Ref EC2Vpc
+    DependsOn:
+      - EC2Vpc
+  EC2SubnetSvcC:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      AvailabilityZone: !Join 
+        - ''
+        - - !Ref 'AWS::Region'
+          - c
+      CidrBlock: !FindInMap
+        - CidrBlock
+        - SvcC
+        - Value
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: !Join 
+            - '-'
+            - - !Ref 'AWS::StackName'
+              - Svc-C
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Project
+          Value: !Ref 'ProjectTag'
+      VpcId: !Ref EC2Vpc
+    DependsOn:
+      - EC2Vpc
+  EC2SubnetDBA:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      AvailabilityZone: !Join 
+        - ''
+        - - !Ref 'AWS::Region'
+          - a
+      CidrBlock: !FindInMap
+        - CidrBlock
+        - DBA
+        - Value
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: !Join 
+            - '-'
+            - - !Ref 'AWS::StackName'
+              - DB-A
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Project
+          Value: !Ref 'ProjectTag'
+      VpcId: !Ref EC2Vpc
+    DependsOn:
+      - EC2Vpc
+  EC2SubnetDBB:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      AvailabilityZone: !Join 
+        - ''
+        - - !Ref 'AWS::Region'
+          - b
+      CidrBlock: !FindInMap
+        - CidrBlock
+        - DBB
+        - Value
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: !Join 
+            - '-'
+            - - !Ref 'AWS::StackName'
+              - DB-B
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Project
+          Value: !Ref 'ProjectTag'
+      VpcId: !Ref EC2Vpc
+    DependsOn:
+      - EC2Vpc
+  EC2SubnetDBC:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      AvailabilityZone: !Join 
+        - ''
+        - - !Ref 'AWS::Region'
+          - c
+      CidrBlock: !FindInMap
+        - CidrBlock
+        - DBC
+        - Value
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: !Join 
+            - '-'
+            - - !Ref 'AWS::StackName'
+              - DB-C
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Project
+          Value: !Ref 'ProjectTag'
+      VpcId: !Ref EC2Vpc
+    DependsOn:
+      - EC2Vpc
+  EC2RTPublic:
+    Type: 'AWS::EC2::RouteTable'
+    Properties:
+      Tags:
+        - Key: Name
+          Value:
+            'Fn::Sub': "${AWS::StackName}-Public"
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Project
+          Value: !Ref 'ProjectTag'
+      VpcId: !Ref EC2Vpc
+    DependsOn:
+      - EC2Vpc
+  EC2RTApp:
+    Type: 'AWS::EC2::RouteTable'
+    Properties:
+      Tags:
+        - Key: Name
+          Value: !Join
+            - '-'
+            - - !Ref 'AWS::StackName'
+              - App
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Project
+          Value: !Ref 'ProjectTag'
+      VpcId: !Ref EC2Vpc
+    DependsOn:
+      - EC2Vpc
+  EC2RTPublicRouteIGW:
+    Type: 'AWS::EC2::Route'
+    Properties:
+      RouteTableId: !Ref EC2RTPublic
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref EC2IGW
+  EC2RTPublicAssocPublicA:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      RouteTableId: !Ref EC2RTPublic
+      SubnetId: !Ref EC2SubnetPublicA
+  EC2RTPublicAssocPublicB:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      RouteTableId: !Ref EC2RTPublic
+      SubnetId: !Ref EC2SubnetPublicB
+  EC2RTPublicAssocPublicC:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      RouteTableId: !Ref EC2RTPublic
+      SubnetId: !Ref EC2SubnetPublicC
+  # FIXME: EC2RTAppRouteIGW should only be temporary.
+  EC2RTAppRouteIGW:
+    Type: 'AWS::EC2::Route'
+    Properties:
+      RouteTableId: !Ref EC2RTApp
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref EC2IGW
+  EC2RTAppAssocAppA:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      RouteTableId: !Ref EC2RTApp
+      SubnetId: !Ref EC2SubnetSvcA
+  EC2RTAppAssocAppB:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      RouteTableId: !Ref EC2RTApp
+      SubnetId: !Ref EC2SubnetSvcB
+  EC2RTAppAssocAppC:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      RouteTableId: !Ref EC2RTApp
+      SubnetId: !Ref EC2SubnetSvcC
+  EC2RTAppAssocDBA:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      RouteTableId: !Ref EC2RTApp
+      SubnetId: !Ref EC2SubnetDBA
+  EC2RTAppAssocDBB:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      RouteTableId: !Ref EC2RTApp
+      SubnetId: !Ref EC2SubnetDBB
+  EC2RTAppAssocDBC:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      RouteTableId: !Ref EC2RTApp
+      SubnetId: !Ref EC2SubnetDBC
+  EC2IGW:
+    Type: 'AWS::EC2::InternetGateway'
+    Properties:
+      Tags:
+        - Key: Name
+          Value:
+            'Fn::Sub': "${AWS::StackName}-IGW"
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Project
+          Value: !Ref 'ProjectTag'
+  EC2IGWAttachment:
+    Type: 'AWS::EC2::VPCGatewayAttachment'
+    Properties:
+      InternetGatewayId: !Ref EC2IGW
+      VpcId: !Ref EC2Vpc
+
+  EC2SGDB:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: For database security group, allows access from internal instances only
+      VpcId: !Ref EC2Vpc
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 5432
+          ToPort: 5432
+          CidrIp: 54.84.127.252/32
+          Description: API instance
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          FromPort: -1
+          ToPort: -1
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Project
+          Value: !Ref 'ProjectTag'
+        - Key: Environment
+          Value: !Ref 'Environment'
+
+  ########################################################################
+  # RDS
+  ########################################################################
+
+  RDSAPgSQLDBSubnetGrp:
+    Type: 'AWS::RDS::DBSubnetGroup'
+    Properties:
+      DBSubnetGroupDescription:
+        'Fn::Sub':
+          - 'CloudFormation stack: ${StackName}'
+          - StackName: !Ref 'AWS::StackName'
+      SubnetIds:
+        - !Ref EC2SubnetPublicA
+        - !Ref EC2SubnetPublicB
+
+  RDSPgSQLDB:
+    Type: 'AWS::RDS::DBInstance'
+    Properties:
+      # Configuration
+      AllowMajorVersionUpgrade: true
+      DBInstanceIdentifier:
+        'Fn::Sub': "${AWS::StackName}-pgdb"
+      Engine: postgres
+      EngineVersion: '15.3'
+      DBName: dctordb
+      # Instance class
+      DBInstanceClass: !Ref RDSDBInstanceClass
+      
+      # Availability
+      MasterUsername: !Ref RDSDBUser
+      MasterUserPassword: !Ref RDSDBPassword
+      MultiAZ: !Ref RDSIsMultiAZ
+      # Storage
+      StorageType: gp2
+      AllocatedStorage: !Ref RDSDBAllocatedStorage
+      MaxAllocatedStorage: !Ref RDSDBMaxAllocatedStorage
+      EnablePerformanceInsights: false
+      # KmsKeyId: !Ref KMSStorageKey
+      StorageEncrypted: false
+      # PerformanceInsightsRetentionPeriod: 7
+      # Backup
+      BackupRetentionPeriod: 0
+      # Connectivity
+      Port: 5432
+      # Networking
+      CACertificateIdentifier: rds-ca-ecc384-g1
+      DBSubnetGroupName: !Ref RDSAPgSQLDBSubnetGrp
+      # Security
+      VPCSecurityGroups:
+        - !GetAtt EC2SGDB.GroupId
+      PubliclyAccessible: true
+      # AssociatedRoles:
+      #   - FeatureName: s3Export
+      #     RoleArn: !GetAtt RDSExportRole.Arn
+      Tags:
+        - Key: Name
+          Value:
+            'Fn::Sub': "${AWS::StackName}-DB"
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Project
+          Value: !Ref 'ProjectTag'
+    DeletionPolicy: 'Snapshot'
+
+Outputs:
+  VpcId:
+    Description: VPC ID
+    Value: !Ref EC2Vpc
+    Export:
+      Name:
+        'Fn::Sub': "${AWS::StackName}-VpcId" 
+  VpcSubnetPublicA:
+    Description: Subnet ID of the public subnet in availability zone A
+    Value: !Ref EC2SubnetPublicA
+    Export:
+      Name:
+        'Fn::Sub': "${AWS::StackName}-VpcSubnetPublicA"
+  VpcSubnetPublicB:
+    Description: Subnet ID of the public subnet in availability zone B
+    Value: !Ref EC2SubnetPublicB
+    Export:
+      Name:
+        'Fn::Sub': "${AWS::StackName}-VpcSubnetPublicB"
+  VpcSubnetPublicC:
+    Description: Subnet ID of the public subnet in availability zone C
+    Value: !Ref EC2SubnetPublicC
+    Export:
+      Name:
+        'Fn::Sub': "${AWS::StackName}-VpcSubnetPublicC"
+  VpcSubnetSvcA:
+    Description: Subnet ID of the services private subnet in availability zone A
+    Value: !Ref EC2SubnetSvcA
+    Export:
+      Name:
+        'Fn::Sub': "${AWS::StackName}-VpcSubnetSvcA"
+  VpcSubnetSvcB:
+    Description: Subnet ID of the services private subnet in availability zone B
+    Value: !Ref EC2SubnetSvcB
+    Export:
+      Name:
+        'Fn::Sub': "${AWS::StackName}-VpcSubnetSvcB"
+  VpcSubnetSvcC:
+    Description: Subnet ID of the services private subnet in availability zone C
+    Value: !Ref EC2SubnetSvcC
+    Export:
+      Name:
+        'Fn::Sub': "${AWS::StackName}-VpcSubnetSvcC"
+  VpcSubnetDBA:
+    Description: Subnet ID of the database subnet in availability zone A
+    Value: !Ref EC2SubnetDBA
+    Export:
+      Name:
+        'Fn::Sub': "${AWS::StackName}-VpcSubnetDBA"
+  VpcSubnetDBB:
+    Description: Subnet ID of the database subnet in availability zone B
+    Value: !Ref EC2SubnetDBB
+    Export:
+      Name:
+        'Fn::Sub': "${AWS::StackName}-VpcSubnetDBB"
+  VpcSubnetDBC:
+    Description: Subnet ID of the database subnet in availability zone C
+    Value: !Ref EC2SubnetDBC
+    Export:
+      Name:
+        'Fn::Sub': "${AWS::StackName}-VpcSubnetDBC"
+  IAMAKDctorSvcSecretAccessKey:
+    Description: IAM user secret access key
+    Value: !GetAtt IAMAKDctorSvc.SecretAccessKey
+    Export:
+      Name:
+        'Fn::Sub': "${AWS::StackName}-IAMAKDctorSvcSecretAccessKey"

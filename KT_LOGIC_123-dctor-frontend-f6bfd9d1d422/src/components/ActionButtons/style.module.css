@@ -1,0 +1,14 @@
+.actions-container {
+    width: 100%;
+    max-width: 275px;
+    margin: 0 auto;
+}
+
+.actions-container > * {
+    margin-bottom: 1rem;
+}
+
+.actions-container > *:last-child {
+    margin-bottom: 0;
+}
+

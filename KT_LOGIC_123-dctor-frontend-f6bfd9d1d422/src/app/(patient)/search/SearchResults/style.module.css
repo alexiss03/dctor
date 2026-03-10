@@ -1,0 +1,30 @@
+.container {
+    background: white;
+    flex: 4;
+    max-width: 600px;
+    width: 600px;
+    padding: 2rem;
+    height: 100vh;
+    overflow-x: auto;
+}
+
+.back-button-container {
+    margin-bottom: 1rem;
+}
+
+.results-text {
+    color: #808080;
+}
+
+.highlight {
+    color: black;
+    font-weight: bold;;
+}
+
+.results-container > div {
+    margin-bottom: 1rem;
+}
+
+.results-container > div:last-child {
+    margin-bottom: 0;
+}

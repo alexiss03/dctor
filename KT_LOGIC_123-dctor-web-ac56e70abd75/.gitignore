@@ -1,0 +1,7 @@
+.idea
+.direnv
+.env
+.envrc
+
+dist
+node_modules

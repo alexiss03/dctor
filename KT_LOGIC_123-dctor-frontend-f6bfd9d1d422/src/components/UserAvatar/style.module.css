@@ -1,0 +1,38 @@
+.avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 4px;
+}
+
+.circle {
+    border-radius: 70px;
+}
+
+.small {
+    width: 50px;
+    height: 50px;
+}
+
+.small.circle {
+    border-radius: 50px;
+}
+
+.large {
+    width: 100px;
+    height: 100px;
+}
+
+.large.circle {
+    border-radius: 100px;
+}
+
+.placeholder {
+    border-radius: 500px;
+    background: #528dd7;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    text-transform: uppercase;
+}

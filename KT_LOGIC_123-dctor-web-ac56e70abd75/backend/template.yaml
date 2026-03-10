@@ -1,0 +1,42 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Backend Serverless
+Globals:
+  Function:
+    Timeout: 60
+
+Resources:
+  LFnBackendFn:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: services/hasura/
+      PackageType: Image
+      MemorySize: 128
+      ImageUri: doctr-web-backend:latest
+      # ImageUri: 188076460438.dkr.ecr.us-east-1.amazonaws.com/dctoriamservice0094b2dc/casdoorwebapifnb20228acrepo:doctr-web-iam-serverless-700c6197c3c5-latest
+      Environment:
+        Variables: 
+          PORT: '3000'
+          NODE_CONFIG_DIR: ./conf/
+          NODE_ENV: dev-serverless
+      Architectures:
+        - x86_64
+      AutoPublishAlias: live
+      FunctionUrlConfig:
+        AuthType: NONE
+        InvokeMode: BUFFERED
+      # Events:
+      #   APIEvent:
+      #     Type: HttpApi
+    Metadata:
+      DockerTag: serverless-latest
+      DockerContext: ./
+      Dockerfile: backend/Dockerfile
+      SamResourceId: LFnBackendFn
+
+Outputs:
+  LFnBackendEndpt:
+      Description: "Backend function URL endpoint"
+      Value:
+        Fn::GetAtt: LFnBackendFnUrl.FunctionUrl

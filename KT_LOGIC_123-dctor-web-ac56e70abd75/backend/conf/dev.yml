@@ -1,0 +1,193 @@
+datasources:
+  dctordb:
+    name: DctorDb
+    connector: '@dctor/loopback-connector-postgresql'
+    # host: localhost
+    # port: 56433
+    # ssl: true
+    # idleTimeoutMillis: 600000
+    # connectionTimeout: 600000
+    host: rdb
+    port: 5432
+    # host: localhost
+    # port: 55432
+    user: doctrplatform
+    password: 'd0ctr123456$$!'
+    database: 'dctordb'
+    schema: 'doctr'
+  iam:
+    name: IAM
+    connector: rest
+    baseURL: http://iam:8000/api/
+    crud: false
+    oidcClientId: c792cbd09fd579647637
+    oidcClientSecret: 418ec0a7c263d2dbe2d4effa6574ffb3d0931d62
+    operations:
+      - template:
+          method: POST
+          url: "{baseURL}signup"
+          headers:
+            Accept: application/json
+            Content-Type: application/json
+          body:
+            application: dctor-app
+            organization: dctor
+            password: "{password}"
+            firstName: "{firstName}"
+            lastName: "{lastName}"
+            email: "{email}"
+          # responsePath: "$"
+        functions:
+          signup:
+            - baseURL
+            - password
+            - firstName
+            - lastName
+            - email
+      - template:
+          method: GET
+          url: "{baseURL}get-user?id={owner}/{id}&email={email}&owner={owner}&userId={id}"
+          headers:
+            Authorization: "{authorization}"
+        functions:
+          getUser:
+            - baseURL
+            - authorization
+            - owner
+            - id
+            - email
+      - template:
+          method: POST
+          url: "{baseURL}update-user?id={owner}/{id}&columns={columns}"
+          headers:
+            Authorization: "{authorization}"
+          body: "{user}"
+        functions:
+          updateUser:
+            - baseURL
+            - authorization
+            - owner
+            - id
+            - user
+            - columns
+      - template:
+          method: POST
+          url: "{baseURL}send-verification-code"
+          headers:
+            Content-Type: application/x-www-form-urlencoded
+          body: "type={type}&applicationId={applicationId}&method={method}&captchaType={checkType}&dest={dest}"
+        functions:
+          sendVerificationCode:
+            - baseURL
+            - type
+            - applicationId
+            - method
+            - checkType
+            - dest
+      - template:
+          method: POST
+          url: "{baseURL}get-email-and-phone"
+          headers:
+            Content-Type: application/json
+            Accept: application/json
+          body:
+            application: dctor-app
+            organization: dctor
+            username: "{username}"
+        functions:
+          getEmailAndPhone:
+            - baseURL
+            - username
+      - template:
+          method: POST
+          url: "{baseURL}login"
+          headers:
+            Authorization: "{authorization}"
+            Content-Type: application/json
+            Accept: application/json
+          body:
+            application: dctor-app
+            organization: dctor
+            username: "{username}"
+            name: "{id}"
+            code: "{code}"
+            type: "{type}"
+        functions:
+          login:
+            - baseURL
+            - authorization
+            - id
+            - username
+            - type
+            - code
+      - template:
+          method: POST
+          url: "{baseURL}set-password"
+          headers:
+            Authorization: "{authorization}"
+            Content-Type: application/x-www-form-urlencoded
+            Accept: application/json
+          body: "userOwner=dctor&userName={id}&oldPassword={oldPassword}&newPassword={newPassword}"
+        functions:
+          setPassword:
+            - baseURL
+            - authorization
+            - id
+            - oldPassword
+            - newPassword
+  caldav:
+    name: CalDAV
+    connector: rest
+    baseURL: http://localhost:50080/davical/
+    crud: false
+    operations:
+      - template:
+          method: GET
+          url: "{baseURL}caldav.php/{id}/{collection}/"
+          headers:
+            Authorization: "{authorization}"
+            Content-Type: application/x-www-form-urlencoded
+            Accept: text/calendar; charset="utf-8"
+        functions:
+          getCalendar:
+            - baseURL
+            - authorization
+            - id
+            - collection
+      - template:
+          method: PUT
+          url: "{baseURL}caldav.php/{id}/{collection}/{filename}"
+          headers:
+            Content-Type: text/calendar
+          body: "{body}"
+        functions:
+          addEvent:
+            - baseURL
+            - authorization
+            - id
+            - collection
+            - filename
+      - template:
+          method: POST
+          url: "{baseURL}sync-principal.php"
+          headers:
+            Authorization: "{authorization}"
+            Content-Type: application/x-www-form-urlencoded
+            Accept: application/json
+          body: "Sync_LDAP_User=1&id={id}&displayName={displayName}&email={email}"
+        functions:
+          syncPrincipal:
+            - baseURL
+            - authorization
+            - id
+            - displayName
+            - email
+openApiSpec:
+  servers:
+    - url: https://doctr-local.lbhonra.de/
+    - url: https://dctor-54-84-127-252.sslip.io/
+supportEmail: 'admin@grommettechnologies.com'
+verificationCodeTimeout: 10
+uuid_namespace:
+  default: c01e2340-c5d5-2abf-2d48-472eee9484da
+  insurance: 2df79ba8-5690-11ea-b0e4-d76f3e261f30

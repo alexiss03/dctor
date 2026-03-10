@@ -1,0 +1,40 @@
+.wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.wrapper > * {
+    margin-bottom: 1rem;
+}
+
+.message {
+    font-size: 1.5rem;
+    color: #4551FD;
+    font-weight: bold;
+    text-align: center;
+}
+
+.message > * {
+    margin-bottom: 0.5rem;
+}
+
+.message > *:last-child {
+    margin-bottom: 0;
+}
+
+.description {
+    text-align: center;
+    color: #787878;
+    font-size: 0.875rem;
+    font-weight: bold;
+}
+
+.description > * {
+    margin-bottom: 0.5rem;
+}
+
+.description > *:last-child {
+    margin-bottom: 0;
+}

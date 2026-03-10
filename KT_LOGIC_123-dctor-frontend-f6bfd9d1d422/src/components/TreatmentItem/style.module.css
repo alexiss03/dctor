@@ -1,0 +1,25 @@
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1em;
+}
+
+.wrapper:last-child {
+    margin-bottom: 0;
+}
+
+.icon-name-container {
+    display: flex;
+    align-items: center;
+}
+
+.icon-container {
+    flex-shrink: 0;
+    width: 28px;
+    margin-right: 0.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+}

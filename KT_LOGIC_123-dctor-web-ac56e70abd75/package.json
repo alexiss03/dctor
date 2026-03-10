@@ -1,0 +1,15 @@
+{
+  "name": "dctor-web",
+  "version": "0.0.1",
+  "description": "Dctor Web",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lambert Honrade <lbhonrade+ktlogic@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "@loopback/cli": "^4.1.8",
+    "yarn": "^1.22.19"
+  }
+}

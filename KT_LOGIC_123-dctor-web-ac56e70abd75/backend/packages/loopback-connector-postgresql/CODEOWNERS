@@ -1,0 +1,10 @@
+# Lines starting with '#' are comments.
+# Each line is a file pattern followed by one or more owners,
+# the last matching pattern has the most precedence.
+
+# Alumni members
+# @kjdelisle @loay @ssh24 @virkt25 @b-admike @zbarbuto @elv1s
+# @jannyHou @emonddr 
+
+# Core team members
+* @dhmlau @agnes512 @achrinza @marioestradarosa

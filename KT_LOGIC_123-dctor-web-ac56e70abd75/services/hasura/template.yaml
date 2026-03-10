@@ -1,0 +1,118 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Hasura Serverless
+Globals:
+  Function:
+    Timeout: 60
+
+Resources:
+  DCAgentFn:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: services/hasura/
+      PackageType: Image
+      MemorySize: 256
+      ImageUri: doctr-web-graphql-dc-agent-serverless:latest
+      # ImageUri: 188076460438.dkr.ecr.us-east-1.amazonaws.com/dctoriamservice0094b2dc/casdoorwebapifnb20228acrepo:doctr-web-iam-serverless-700c6197c3c5-latest
+      Environment:
+        Variables: 
+          PORT: '8081'
+          QUARKUS_LOG_LEVEL: ERROR # FATAL, ERROR, WARN, INFO, DEBUG, TRACE
+          ## https://quarkus.io/guides/opentelemetry#configuration-reference
+          QUARKUS_OPENTELEMETRY_ENABLED: "false"
+          ## QUARKUS_OPENTELEMETRY_TRACER_EXPORTER_OTLP_ENDPOINT: http://jaeger:4317
+          # dataSourceName: 'sslmode=disable user=doctrplatform password=d0ctr123456$$! host=rdb port=5432 dbname=doctrdb search_path=public'
+          AWS_LWA_READINESS_CHECK_PROTOCOL: http
+          AWS_LWA_PORT: 8081
+          AWS_LWA_READINESS_CHECK_PORT: 8081
+          AWS_LWA_READINESS_CHECK_PATH: '/api/v1/athena/health'
+      Architectures:
+        - x86_64
+      AutoPublishAlias: live
+      FunctionUrlConfig:
+        AuthType: NONE
+        InvokeMode: BUFFERED
+      # Events:
+      #   APIEvent:
+      #     Type: HttpApi
+    Metadata:
+      DockerTag: serverless-latest
+      DockerContext: ./
+      Dockerfile: services/hasura/Dockerfile.dc-agent
+      SamResourceId: DCAgentFn
+
+  LFnEngine:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: services/hasura/
+      PackageType: Image
+      MemorySize: 256
+      ImageUri: doctr-web-graphql-engine-serverless:latest
+      # ImageUri: 188076460438.dkr.ecr.us-east-1.amazonaws.com/dctoriamservice0094b2dc/casdoorwebapifnb20228acrepo:doctr-web-iam-serverless-700c6197c3c5-latest
+      Environment:
+        Variables: 
+          PORT: '8080'
+          ## postgres database to store Hasura metadata
+          HASURA_GRAPHQL_METADATA_DATABASE_URL: "postgres://doctrplatform:d0ctr123456$$!@dctor-dev-pgdb.cvk1ehc8pruz.us-east-1.rds.amazonaws.com:5432/dctordb"
+          HASURA_GRAPHQL_ADMIN_SECRET: d0ctr123456$$!
+          ## this env var can be used to add the above postgres database to Hasura as a data source. this can be removed/updated based on your needs
+          PG_DATABASE_URL: "postgres://doctrplatform:d0ctr123456$$!@dctor-dev-pgdb.cvk1ehc8pruz.us-east-1.rds.amazonaws.com:5432/dctordb"
+          ## enable the console served by server
+          HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
+          ## enable debugging mode. It is recommended to disable this in production
+          HASURA_GRAPHQL_DEV_MODE: "true"
+          HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+          ## uncomment next line to run console offline (i.e load console assets from server instead of CDN)
+          # HASURA_GRAPHQL_CONSOLE_ASSETS_DIR: /srv/console-assets
+          ## uncomment next line to set an admin secret
+          # HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
+          HASURA_GRAPHQL_METADATA_DEFAULTS: !Sub
+            - |
+              {
+                "backend_configs":{
+                  "dataconnector":{
+                    "athena":{
+                      "uri":"${DCAgentFnEndpt}api/v1/athena"
+                    },
+                    "mariadb":{
+                      "uri":"${DCAgentFnEndpt}api/v1/mariadb"
+                    },
+                    "mysql8":{
+                      "uri":"${DCAgentFnEndpt}api/v1/mysql"
+                    },
+                    "oracle":{
+                      "uri":"${DCAgentFnEndpt}api/v1/oracle"
+                    },
+                    "snowflake":{
+                      "uri":"${DCAgentFnEndpt}api/v1/snowflake"
+                    }
+                  }
+                }
+              }
+            - DCAgentFnEndpt: !GetAtt DCAgentFnUrl.FunctionUrl
+
+      Architectures:
+        - x86_64
+      AutoPublishAlias: live
+      FunctionUrlConfig:
+        AuthType: NONE
+        InvokeMode: BUFFERED
+      # Events:
+      #   APIEvent:
+      #     Type: HttpApi
+    Metadata:
+      DockerTag: serverless-latest
+      DockerContext: ./
+      Dockerfile: services/hasura/Dockerfile.engine
+      SamResourceId: LFnEngine
+
+Outputs:
+  DCAgentFnEndpt:
+      Description: "GraphQL data connector agent function URL endpoint"
+      Value:
+        Fn::GetAtt: DCAgentFnUrl.FunctionUrl
+  LFnEngineEndpt:
+      Description: "GraphQL engine function URL endpoint"
+      Value:
+        Fn::GetAtt: LFnEngineUrl.FunctionUrl

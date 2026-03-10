@@ -1,0 +1,29 @@
+.container {
+    padding: 1rem;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    min-height: 0;
+}
+
+.avatar-container {
+    margin-right: 1rem;;
+}
+
+.info-container {
+    overflow: hidden;
+}
+
+.actions-container > * {
+    margin-right: 0.5rem;
+}
+
+.actions-container > *:last-child {
+    margin-right: 0;
+}
+
+.background-art {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}

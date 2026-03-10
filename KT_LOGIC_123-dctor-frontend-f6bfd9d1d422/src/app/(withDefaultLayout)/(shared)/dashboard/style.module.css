@@ -1,0 +1,27 @@
+.greetings {
+    color: #4551FD;
+    font-size: 1.625rem;
+    font-weight: bold;;
+    margin-bottom: 1rem;
+}
+
+.titlegroup {
+    padding-left: 1rem;
+    width: 340px;
+}
+
+.title {
+    font-size: 3.75rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    color: #696C70;
+    font-size: 1.5rem;
+}
+
+.highlight {
+    color: #628DCE;
+}
+

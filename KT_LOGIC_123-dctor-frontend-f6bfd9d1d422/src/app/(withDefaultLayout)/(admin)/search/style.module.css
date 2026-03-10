@@ -1,0 +1,24 @@
+.container {
+    max-width: 1024px;
+    margin: auto;
+}
+
+.container > * {
+    margin-bottom: 1rem;
+}
+
+.container > *:last-child {
+    margin-bottom: 0;
+}
+
+.search-bar-container {
+    width: 450px;
+}
+
+.results-text {
+    color: rgba(0,0,0,0.5);
+}
+
+.results-number {
+    color: #33343B;
+}

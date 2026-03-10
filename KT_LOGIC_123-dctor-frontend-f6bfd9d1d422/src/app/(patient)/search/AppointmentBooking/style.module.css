@@ -1,0 +1,47 @@
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-align: center;
+    margin: 0 !important;
+}
+
+.doctor-info-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.doctor-info-container > img {
+    margin-right: 1rem;
+}
+
+.actions-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 275px;
+    margin: auto;
+}
+
+.actions-container > button {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.actions-container > button:last-child {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.datetime-picker {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.timeblock-select {
+    width: 275px;
+    margin: auto;
+    padding: 0.5rem;
+}

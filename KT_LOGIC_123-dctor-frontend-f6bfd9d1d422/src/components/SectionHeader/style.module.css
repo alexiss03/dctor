@@ -1,0 +1,10 @@
+.section-header-container {
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.section-header-container > * {
+    margin-bottom: 0;
+    margin-right: 2rem;
+}
