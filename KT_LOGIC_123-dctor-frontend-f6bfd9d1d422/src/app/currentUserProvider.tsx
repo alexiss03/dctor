@@ -6,9 +6,21 @@ import { PropsWithChildren } from "react";
 export async function CurrentUserProvider({ children }: PropsWithChildren) {
   const queryClient = getQueryClient();
 
-  await queryClient.prefetchQuery(["currentUser"], {
-    queryFn: () => getCurrentUser().then((response) => response.data),
-  });
+  try {
+    await queryClient.prefetchQuery(["currentUser"], {
+      queryFn: async () => {
+        try {
+          const response = await getCurrentUser();
+          return response?.data ?? null;
+        } catch {
+          return null;
+        }
+      },
+    });
+  } catch {
+    // Never let a current-user prefetch failure crash the root layout.
+    queryClient.setQueryData(["currentUser"], null);
+  }
 
   const dehydratedState = dehydrate(queryClient);
 
