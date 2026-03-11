@@ -20,7 +20,7 @@ export async function login(email: string, password: string) {
 
     return user;
   } catch (e) {
-    throw e;
+    return null;
   }
 }
 

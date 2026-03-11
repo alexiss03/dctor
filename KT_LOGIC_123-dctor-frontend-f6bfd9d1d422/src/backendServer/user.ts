@@ -97,6 +97,16 @@ export async function getUser<
     return response;
   }
 
+  if (!response.data || typeof response.data !== "object") {
+    return {
+      error: {
+        statusCode: 502,
+        name: "InvalidUserPayload",
+        message: "Unable to parse user profile response.",
+      },
+    };
+  }
+
   return { data: formatGetUserResponse(response.data) as T };
 }
 
@@ -106,6 +116,10 @@ export async function getCurrentUser<
   const response = await get<GetUserResultAPI>("users/me");
 
   if ("error" in response) {
+    return { data: null };
+  }
+
+  if (!response.data || typeof response.data !== "object") {
     return { data: null };
   }
 

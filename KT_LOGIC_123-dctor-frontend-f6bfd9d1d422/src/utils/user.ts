@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { GetUserResultAPI, HealthFacilityAPI } from "@/types/api";
 import { ClinicUser, User } from "@/types/user";
+import { SAMPLE_CLINIC } from "@/mockData";
 
 export function getNameWithTitle(user: {
   type: "doctor" | "patient" | "clinicUser";
@@ -52,14 +53,16 @@ export function formatClinicAdmin(user: GetUserResultAPI): ClinicUser {
     healthFacililities = user.health_facilities;
   }
 
+  const primaryFacility = healthFacililities[0]?.facility;
+
   return {
     ...formatUser(user),
     type: "clinicUser",
     clinic: {
-      id: healthFacililities[0].facility.id,
+      id: primaryFacility?.id ?? SAMPLE_CLINIC.id,
       type: "clinic",
-      name: healthFacililities[0].facility.name,
-      avatarUrl: "/DUMMYclinic.jpg", // @TODO:
+      name: primaryFacility?.name ?? SAMPLE_CLINIC.name,
+      avatarUrl: SAMPLE_CLINIC.avatarUrl,
     },
   };
 }
