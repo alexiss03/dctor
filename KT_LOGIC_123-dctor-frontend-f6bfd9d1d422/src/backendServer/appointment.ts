@@ -190,42 +190,31 @@ export async function getAppointmentsSelf(options?: GetAppointmentsSelfProps) {
   ]);
 
   return {
-    data: normalizedAppointments.map((appointment) => {
-      const doctor = allResponses.find(
-        (d) => d?.id === appointment.attendees[0].attendee_id
-      ) as DoctorProfile | undefined;
+    data: normalizedAppointments
+      .map((appointment) => {
+        const doctor = allResponses.find(
+          (d) => d?.id === appointment.attendees[0].attendee_id
+        ) as DoctorProfile | undefined;
 
-      if (!doctor) {
-        throw new Error(
-          `Missing doctor data for appointment "${appointment.id}"`
-        );
-      }
+        const patient = allResponses.find(
+          (d) => d?.id === appointment.attendees[1].attendee_id
+        ) as (BasePatient & Pick<PatientProfile, "insurances">) | undefined;
 
-      const patient = allResponses.find(
-        (d) => d?.id === appointment.attendees[1].attendee_id
-      );
+        // Keep this resilient in production: skip malformed records instead of
+        // throwing, which causes server-action 500s.
+        if (!doctor || !patient) {
+          return null;
+        }
 
-      if (!patient) {
-        throw new Error(
-          `Missing patient data for appointment "${appointment.id}"`
-        );
-      }
+        const clinic = { ...SAMPLE_CLINIC, id: appointment.clinic_id };
 
-      // @TODO: temporary
-      const clinic = { ...SAMPLE_CLINIC, id: appointment.clinic_id };
-
-      if (!clinic) {
-        throw new Error(
-          `Missing clinic data for appointment "${appointment.id}"`
-        );
-      }
-
-      return formatAppointment(appointment, {
-        doctor,
-        patient: patient as BasePatient & Pick<PatientProfile, "insurances">,
-        clinic: clinic as BaseClinic & Pick<ClinicProfile, "location">,
-      });
-    }),
+        return formatAppointment(appointment, {
+          doctor,
+          patient,
+          clinic: clinic as BaseClinic & Pick<ClinicProfile, "location">,
+        });
+      })
+      .filter((appointment): appointment is Appointment => appointment !== null),
   };
 }
 

@@ -376,16 +376,14 @@ export async function getReviews(id: string, options?: GetReviewsOptions) {
 
   const patients = await Promise.all(fetchPatientsPromises);
 
-  const data = response.data.reviews.map((review) => {
-    const patient = patients.find(
-      (patient) => patient.id === review.reviewer_id
-    );
+  const data = response.data.reviews.flatMap((review) => {
+    const patient = patients.find((patient) => patient.id === review.reviewer_id);
 
     if (!patient) {
-      throw new Error("Patient data missing");
+      return [];
     }
 
-    return formatReview(review, patient);
+    return [formatReview(review, patient)];
   });
 
   return { data };

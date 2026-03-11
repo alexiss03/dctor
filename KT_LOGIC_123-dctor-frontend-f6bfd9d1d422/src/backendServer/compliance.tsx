@@ -21,8 +21,7 @@ export async function getTermsOfService() {
     };
   } catch (e) {
     console.error(e);
-
-    throw new Error("Failed to fetch user information");
+    return null;
   }
 }
 
@@ -41,6 +40,7 @@ export async function getPrivacyPolicy() {
       body: response.data.body as string,
     };
   } catch (e) {
-    throw new Error("Failed to fetch user information");
+    console.error(e);
+    return null;
   }
 }
