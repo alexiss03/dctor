@@ -15,6 +15,7 @@ import {
   formatInsurance,
   formatLocation,
 } from "./healthcare";
+import { SAMPLE_CLINIC } from "@/mockData";
 
 export function formatSearchResult(
   search: SearchResultDoctorAPI
@@ -46,6 +47,7 @@ export function formatSearchResult(
     (d) => d.insurance
   ) as InsuranceAPI[];
   const clinicAddresses = clinic.facility.attributes.addresses as LocationAPI[];
+  const primaryAddress = clinicAddresses[0];
 
   return {
     id,
@@ -74,7 +76,9 @@ export function formatSearchResult(
       id: clinic.facility.id,
       type: "clinic",
       name: clinic.facility.name,
-      location: clinicAddresses.map((location) => formatLocation(location))[0],
+      location: primaryAddress
+        ? formatLocation(primaryAddress)
+        : SAMPLE_CLINIC.location,
     },
   };
 }
@@ -83,6 +87,8 @@ export function formatSearchResultToClinic(
   searchResult: SearchResultClinicAPI
 ): BaseClinic &
   Pick<ClinicProfile, "categories" | "rating" | "location" | "availability"> {
+  const primaryAddress = searchResult.addresses[0];
+
   return {
     id: searchResult.source_id,
     type: "clinic",
@@ -97,7 +103,9 @@ export function formatSearchResultToClinic(
       reviewsCount:
         searchResult.facility.reviews_received_stats.aggregate.count || 0,
     },
-    location: formatLocation(searchResult.addresses[0]),
+    location: primaryAddress
+      ? formatLocation(primaryAddress)
+      : SAMPLE_CLINIC.location,
     availability: searchResult.availability.map((availability) =>
       formatAvailability(availability)
     ),

@@ -27,7 +27,8 @@ export function ButtonSelect({
   defaultValue,
   onSelect,
 }: SelectProps) {
-  const [value, setValue] = useState<string>(defaultValue ?? options[0].value);
+  const fallbackValue = options[0]?.value ?? "";
+  const [value, setValue] = useState<string>(defaultValue ?? fallbackValue);
 
   function handleOptionClick(value: string) {
     setValue(value);

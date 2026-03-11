@@ -87,8 +87,10 @@ export function InsurancesCovered({
     <InfoBox label="Insurances Covered">
       <div className={styles["insurance-item-container"]}>
         {Object.values(groups).map((group) => (
-          <Fragment key={group[0].clinic.id}>
-            <p className={styles["clinic-name"]}>{group[0].clinic.name}</p>
+          <Fragment key={group[0]?.clinic.id ?? "unknown-clinic"}>
+            <p className={styles["clinic-name"]}>
+              {group[0]?.clinic.name ?? "Clinic"}
+            </p>
             {renderInsurances(group.map((group) => group.insurance))}
           </Fragment>
         ))}

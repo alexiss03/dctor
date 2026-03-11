@@ -175,9 +175,9 @@ function ProfilePageFields({ data, user, reviews }: ProfilePageFieldsProps) {
     );
 
     return Object.values(availabilityPerClinic).map((doctorAvailability) => (
-      <Fragment key={doctorAvailability[0].clinic.id}>
+      <Fragment key={doctorAvailability[0]?.clinic.id ?? "unknown-clinic"}>
         <div className={styles["sublabel-container"]}>
-          <strong>{doctorAvailability[0].clinic.name}</strong>
+          <strong>{doctorAvailability[0]?.clinic.name ?? "Clinic"}</strong>
         </div>
         {renderAvailability(doctorAvailability.map((d) => d.availability))}
       </Fragment>

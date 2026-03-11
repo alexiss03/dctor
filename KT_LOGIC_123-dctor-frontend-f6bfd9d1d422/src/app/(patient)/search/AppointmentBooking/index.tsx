@@ -25,9 +25,10 @@ export function AppointmentBooking({ data, onCancel }: BookingOverlayProps) {
   const queryClient = useQueryClient();
   const { prompt } = usePrompt();
   const router = useRouter();
+  const firstClinicId = data.clinics?.[0]?.id ?? "";
 
   const [error, setError] = useState<string | null>(null);
-  const [clinicId, setClinicId] = useState(data.clinics[0].id);
+  const [clinicId, setClinicId] = useState(firstClinicId);
 
   async function onBook(formData: FormData) {
     const response = await book(formData);

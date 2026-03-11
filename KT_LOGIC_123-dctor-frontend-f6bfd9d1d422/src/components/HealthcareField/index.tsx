@@ -675,7 +675,8 @@ export function HealthcareField({
             ? renderCategories(data.treatmentsPerClinic)
             : null,
         // @TODO: handle multiple clinics
-        location: "clinics" in data ? data.clinics[0].location.text : null,
+        location:
+          "clinics" in data ? data.clinics?.[0]?.location?.text ?? null : null,
         date: null,
         time: null,
         rating:
