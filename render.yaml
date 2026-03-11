@@ -26,5 +26,7 @@ services:
           type: web
           name: dctor-backend
           property: hostport
+      - key: __NEXT_PRIVATE_PREBUNDLED_REACT
+        value: experimental
       - key: NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
         sync: false

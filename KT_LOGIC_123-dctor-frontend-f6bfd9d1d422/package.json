@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "__NEXT_PRIVATE_PREBUNDLED_REACT=experimental next dev",
+    "build": "__NEXT_PRIVATE_PREBUNDLED_REACT=experimental next build",
+    "start": "__NEXT_PRIVATE_PREBUNDLED_REACT=experimental next start",
     "lint": "next lint"
   },
   "dependencies": {
